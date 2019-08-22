@@ -114,6 +114,7 @@ text-align: left;width: 100%;min-height: 50px;
       change_parent(file, fileList){
         //判断上传文件数量
         let that = this;
+        
         Array.from(document.querySelector("input[name=files]").files).forEach(file=>{
           if(that.fileList.indexOf(file) == -1){
           this.fileList.push(file);
@@ -129,21 +130,26 @@ text-align: left;width: 100%;min-height: 50px;
         let pid = this.pid;
         if(this.fileList.length > 0){
           this.fileList.forEach(file=> {
-
             formData.append('files[]', file);
-        });
+          });
         }
+        console.log(formData)
+        
         formData.append("pid", pid);
+        console.log(formData)
+        console.log(pid)
 //        console.log(formData.getAll('ldy'));return false;
-        let _url = "http://sd.admin_sd.com/cms/material/material.php?type=upload_fix";//上传文件接口地址
+        let _url = "/api/cms/material/material.php?type=upload_fix";//上传文件接口地址
         this.axios({
           url: _url,
           method: 'post',
           data:formData,
         }).then((res) => {
+          console.log(res)
           that.fileList=[];
         //此处重置文件中间存储变量是为了相同文件能够重复传递
         this.$message.success(res.data.info);
+        this.dialogFormVisible = false
       }, (err) =>{
           this.fileList=[];
         })

@@ -30,7 +30,7 @@
     width: 100%;
 }
 .de_item .de_left .pic_d{
-    display: inline-block;
+    display: block;
    margin: 0 -10px;
 }
 .de_item .de_left .pic_d .pt .pic{
@@ -47,7 +47,7 @@
     width: 100%;height: 174px;overflow: hidden;
 }
 .de_item .de_left .pic_d li img{
-     width: 100%;height: auto;
+     width: 100%;height: 100%;
 }
 .de_item .de_left .pic_d li p{
     line-height: 40px;font-size: 14px;background: #f8f8f8;display: inline-block; width: 100%;
@@ -73,77 +73,82 @@
 
 </style>
 <template>
-    <div class="details" id="details">
-        <!-- 导航 -->
-        <el-row>
-            <el-col :span="24"><div class="grid-content bg-purple-dark"></div></el-col>
-            <div class="meaus">
-                <label class="lable-l">分类：</label>
-                <el-tabs v-model="activeName" @tab-click="handleClick">
-                    <el-tab-pane label="最新" name="0"></el-tab-pane>
-                    <el-tab-pane label="优选" name="2"></el-tab-pane>
-                </el-tabs>
-            </div>
-        </el-row>
-        <el-row class="de_item">
-            <el-col :span="16" class="de_left">
-                <div class="grid-content">
-                    <h5>物料/最新/255</h5>
-                    <ul class="pic_d">
-                        <li class="pt" v-for="(items,index) in pic_t" :key="index">
-                            <div>
-                                <div class="pic"><img :src="items.img"></div>
-                                <p v-html="items.name"></p>
-                            </div>
-                        </li>
-                    </ul>
-                    <ul class="pic_d">
-                        <li v-for="(items,index) in item" :key="index">
-                            <div>
-                                <div class="pic"><img :src="items.img"></div>
-                                <p v-html="items.name"></p>
-                            </div>
-                        </li>
-                    </ul>
+    <div>
+        <navtop default_nav="landing_details"></navtop>
+        <div class="details inner" id="landing_details">
+            <!-- 导航 -->
+            <el-row>
+                <el-col :span="24"><div class="grid-content bg-purple-dark"></div></el-col>
+                <div class="meaus">
+                    <label class="lable-l">分类：</label>
+                    <el-tabs v-model="activeName" @tab-click="handleClick">
+                        <el-tab-pane label="最新" name="0"></el-tab-pane>
+                        <el-tab-pane label="优选" name="2"></el-tab-pane>
+                    </el-tabs>
                 </div>
-            </el-col>
-            <el-col :span="8" class="de_right">
-                <div class="grid-content">
-                    <div class="white_bj btn_top">
-                        <el-button type="primary" @click="btnbuchong">上传banner</el-button>
-                        <el-button type="primary" @click="btn_link">上传链接</el-button>
+            </el-row>
+            <el-row class="de_item">
+                <el-col :span="16" class="de_left">
+                    <div class="grid-content">
+                        <h5>物料/最新/255</h5>
+                        <ul class="pic_d">
+                            <li class="pt" v-for="(items,index) in pic_t" :key="index">
+                                <div>
+                                    <div class="pic"><img :src="items.img"></div>
+                                    <p v-html="items.name"></p>
+                                </div>
+                            </li>
+                        </ul>
+                        <div class="clearfix"></div>
+                        <ul class="pic_d">
+                            <li v-for="(items,index) in item" :key="index">
+                                <div>
+                                    <div class="pic"><img :src="items.img"></div>
+                                    <p v-html="items.name"></p>
+                                </div>
+                            </li>
+                        </ul>
                     </div>
-                    <div class="white_bj padding_left" v-for="(texts,index) in text" :key="index">
-                        <p>编号:{{texts.id}}</p>
-                        <p>大小:{{texts.size}}</p>
-                        <p>尺寸:{{texts.wh}}</p>
-                        <p>上传时间:{{texts.date}}</p>
-                        <p>展示量:{{texts.views}}</p>
-                        <p>点赞--{{texts.likes}}</p>
-                        <p>下载量:{{texts.downs}}</p>
-                    </div>
-                    <div class="white_bj padding_left">
-                        <p>选择banner图</p>
-                        <div>
-                            <el-button class="liMenu" size="small" :class="chicun_id==chicun.id?'active':'chicun.id'" @click="btn_cc(chicun,idx2)" v-for="(chicun,idx2) in chicuns" :key="chicun.id">{{chicun.wh}}</el-button>
+                </el-col>
+                <el-col :span="8" class="de_right">
+                    <div class="grid-content">
+                        <div class="white_bj btn_top">
+                            <el-button type="primary" @click="btnbuchong">上传banner</el-button>
+                            <el-button type="primary" @click="btn_link">上传链接</el-button>
+                        </div>
+                        <div class="white_bj padding_left" v-for="(texts,index) in text" :key="index">
+                            <p>编号:{{texts.id}}</p>
+                            <p>大小:{{texts.size}}</p>
+                            <p>尺寸:{{texts.wh}}</p>
+                            <p>上传时间:{{texts.date}}</p>
+                            <p>展示量:{{texts.views}}</p>
+                            <p>点赞--{{texts.likes}}</p>
+                            <p>下载量:{{texts.downs}}</p>
+                        </div>
+                        <div class="white_bj padding_left">
+                            <p>选择banner图</p>
+                            <div>
+                                <el-button class="liMenu" size="small" :class="chicun_id==chicun.id?'active':'chicun.id'" @click="btn_cc(chicun,idx2)" v-for="(chicun,idx2) in chicuns" :key="chicun.id">{{chicun.wh}}</el-button>
+                            </div>
+                        </div>
+                        <div class="white_bj xiazai">
+                            <el-button type="primary" @click="down()">下载banner图</el-button>
                         </div>
                     </div>
-                    <div class="white_bj xiazai">
-                        <el-button type="primary" @click="down()">下载banner图</el-button>
-                    </div>
-                </div>
-            </el-col>
-        </el-row>
-        <div>
-            <upload ref="myupload" psMsg="landing_page000" :pid="pid"></upload>
-        </div>
+                </el-col>
+            </el-row>
+            <div>
+                <upload ref="myupload" psMsg="landing_page000" :pid="pid"></upload>
+            </div>
 
-        <div>
-            <uploadlink ref="mylink" linkMsg="landing_page111" :pid="pid"></uploadlink>
+            <div>
+                <uploadlink ref="mylink" linkMsg="landing_page111" :pid="pid"></uploadlink>
+            </div>
         </div>
     </div>
 </template>
 <script>
+import navtop from '@/components/navtop' // top nav
 import upload from '@/components/upload'
 import uploadlink from '@/components/uploadlink'
 export default {
@@ -173,10 +178,10 @@ export default {
         }
     },
     components:{
+        navtop,
         upload,
         uploadlink
     },
-
     created:function(){
         this.get_data()
     },
@@ -188,9 +193,9 @@ export default {
 
              //发送get请求
              let url = "";
-             let that =this;
+             let that = this;
              let id = that.$route.query.ID;
-             this.axios.get('http://sd.admin_sd.com/cms/material/material.php?type=get_one_info&id='+id)
+             this.axios.get('/api/cms/material/material.php?type=get_one_info&id='+id)
                      .then(function (response) {
                          let data = response.data.data;
                          that.pic_t = data['pic_t'];
@@ -219,8 +224,8 @@ export default {
              let id = this.chicun_id;
              let pid = this.pid;
              let that = this;
-             window.open('http://sd.admin_sd.com/cms/material/material.php?type=download_by_id&id='+id+'&pid='+pid);
-//             this.axios.get('http://sd.admin_sd.com/cms/material/material.php?type=download_by_id&id='+id)
+             window.open('/api/cms/material/material.php?type=download_by_id&id='+id+'&pid='+pid);
+//             this.axios.get('/api/cms/material/material.php?type=download_by_id&id='+id)
 //                     .then(function (response) {
 //                         //window.open(response.data.data);
 //                     })

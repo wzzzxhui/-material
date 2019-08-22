@@ -1,7 +1,7 @@
 <style scoped>
-    #material{
-        margin: 90px -10px 0;
-    }
+/* #material{
+    margin: 90px -10px 0;
+} */
 .material>>>.meaus .el-tabs__nav-wrap::after{
     background: none
 }
@@ -30,7 +30,7 @@
     -webkit-box-shadow: 0px 4px 10px rgba(0,0,0,0.4);box-shadow: 0px 4px 10px rgba(0,0,0,0.4);
 }
 .material>>>.main .main-item .pic{
-   height: 215px;overflow: hidden;position: relative;
+   height: 215px;overflow: hidden;position: relative;background: white;
 }
 .main .main-item .pic span{
    position: absolute;right: 0;top: 0;width: 62px;height: 24px;background: #62B8F2;border-radius: 0 0 0 16px;font-size: 12px;color: white;line-height: 24px;
@@ -39,7 +39,7 @@
   width: 100%;
 }
 .down{
-    height: 60px;background: white;display: flex;flex-direction: row;justify-content: space-between;padding: 0 10px;
+    height: 60px;background: #f8f8f8;display: flex;flex-direction: row;justify-content: space-between;padding: 0 10px;
 }
 .down span{
   min-width: 40px;line-height: 60px;padding-left: 30px; display: inline-block;text-align: left;color: #181818;
@@ -95,14 +95,14 @@
                     :page-sizes="[5, 10, 20, 40]"
                     :page-size="pagesize"
                     layout="total, sizes, prev, pager, next, jumper"
-                    :total="list.length">
+                    :total="list_length">
                 </el-pagination>
             </div>
         </div>
     </div>
 </template>
 <script>
-import navtop from '@/components/navtop'
+import navtop from '@/components/navtop' // top nav
 export default {
     data (){
         return{
@@ -113,6 +113,7 @@ export default {
 
             ],
             navid:'1',
+            list_length:10
         }
     },
     created: function () {
@@ -127,18 +128,20 @@ export default {
 
          //获取列表
          get_all:function(status){
-
-             //发送get请求
-             let url = "";
-             let that =this;
-             this.axios.get('http://sd.admin_sd.com/cms/material/material.php?type=get_all&upload_type=2&status='+status+'&page_size='+this.pagesize+'&current_page='+this.currentPage)
-                     .then(function (response) {
-                         let data = response.data.data;
-                         that.list = data;
-                     })
-                     .catch(function (error) { // 请求失败处理
-                         console.log(error);
-                     });
+            //发送get请求
+            let url = "";
+            let that =this;
+            this.axios.get('/api/cms/material/material.php?type=get_all&upload_type=2&status='+status+'&page_size='+this.pagesize+'&current_page='+this.currentPage)
+            .then(function (response) {
+            console.log(response+'111')
+            let data = response.data.data;
+            that.list = data;
+           
+            that.list_length = parseInt( response.data.list_length);
+            })
+            .catch(function (error) { // 请求失败处理
+                console.log(error+'222');
+            });
          },
 
         //顶部导航
@@ -154,14 +157,17 @@ export default {
             that.$router.push({name:"material_details",query:{'ID':id}});
          },
          // 初始页currentPage、初始每页数据数pagesize和数据data
+
         handleSizeChange: function (size) {
             this.pagesize = size;
-            console.log(this.pagesize)  //每页下拉显示数据
+            this.get_all(this.navid);
+            
         },
         handleCurrentChange: function(currentPage){
             this.currentPage = currentPage;
-            console.log(this.currentPage)  //点击第几页
+            this.get_all(this.navid);
         }
+
     },
     components:{
         navtop

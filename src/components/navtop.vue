@@ -2,11 +2,12 @@
 body{
   background-color: #ddd
 }
-.clearfix{clear: both;}
+.clearfix{
+  clear: both;
+}
 .nav{
   width: 100%;height: 90px; background: white;position: fixed;top: 0;z-index: 9;-webkit-box-shadow: 0px 2px 10px rgba(0,0,0,0.1);box-shadow: 0px 2px 10px rgba(0,0,0,0.1)
 }
-
 .nav .logo{
   height: 37px;float: left;margin: 26px 70px 26px 0;cursor: pointer;
 }
@@ -23,8 +24,7 @@ body{
   position: absolute;right: 0;top: 0;height: 90px;
 }
 .el-menu--horizontal>.el-menu-item.is-active {
-    border-bottom: 4px solid #409EFF;
-    color: #17A1FF;
+  border-bottom: 4px solid #409EFF;color: #17A1FF;
 }
 .search{
   margin: 30px 0 0 0;
@@ -33,15 +33,13 @@ body{
   border-radius: 15px 0 0 15px;height: 30px;line-height: 30px;
 }
 .search>>>.el-input-group__append{
-  border-radius: 0 15px 15px 0;color: white;
-background:linear-gradient(90deg,rgba(23,161,255,1),rgba(23,120,253,1));border-color: #17A1FF;
+  border-radius: 0 15px 15px 0;color: white;background:linear-gradient(90deg,rgba(23,161,255,1),rgba(23,120,253,1));border-color: #17A1FF;
 }
 .top-right .el-button--small.is-round[data-v-47323bf2]{
   height: 30px;line-height: 30px;padding: 0 15px;margin-top: 30px;
 }
 .top-right .el-button--small.is-round {
-    padding: 9px 15px;
-    margin: 25px 0 0 30px;
+  padding: 9px 15px;margin: 30px 0 0 30px;
 }
 /* 弹出框 */
 .isbox>>>.el-dialog__header{
@@ -51,12 +49,10 @@ background:linear-gradient(90deg,rgba(23,161,255,1),rgba(23,120,253,1));border-c
   width: 760px;
 }
 .title_t{
-  float: left;
-  font-size: 16px;
-  line-height: 32px;
+  float: left;font-size: 16px;line-height: 32px;
 }
 .upload-demo{
-text-align: left;width: 100%;
+  text-align: left;width: 100%;
 }
 .isbox>>>.el-dialog__body{
   text-align: right;max-height: 600px;overflow: auto;
@@ -68,16 +64,13 @@ text-align: left;width: 100%;
   width: 200px;
 }
 .dia-item{
-  position: relative;
-  padding-bottom: 30px
+  position: relative;padding-bottom: 30px
 }
 .item_t{
   height: 32px;
 }
 .isbox .upload-demo>>>.el-upload{
-  margin: 0;padding: 0;position: absolute;
-  top: 0;
-  right: 0;
+  margin: 0;padding: 0;position: absolute;top: 0;right: 0;
 }
 .upload-demo>>>.el-upload__tip{
   text-align: left;
@@ -95,12 +88,6 @@ text-align: left;width: 100%;
   display: none
 }
 /* 弹出框 */
-
-
-/* 
-@media screen and(min-width: 768px) and (max-width: 959px) { css-code; } 
-@media screen and(min-width: 480px) and (max-width: 767px) { css-code; } 
-@media screen and (max-width: 479px) { css-code; } */
 </style>
 
 <template>
@@ -198,7 +185,7 @@ text-align: left;width: 100%;
         search:'',//搜索
         dialogFormVisible: false,//弹出层
         fileList: [
-//          // {name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}, {name: 'food2.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}
+         // {name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}, {name: 'food2.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}
         ],
         fileList2: [
 //          {name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}, {name: 'food2.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}
@@ -212,25 +199,28 @@ text-align: left;width: 100%;
         }
     },
     methods: {
-      //点击logo返回首页
       change_parent(file, fileList){
+        console.log(file)
         //判断上传文件数量
         let that = this;
         Array.from(document.querySelector("input[name="+that.istype+"]").files).forEach(file=>{
           if(this.fileList.indexOf(file) == -1){
+            file['url']='blob:http://localhost:8082/f4b94c1c-a7dd-452a-b931-677cfa5d8753';
+            console.log(file)
             this.fileList.push(file);
           }
         });
 
       },
       change_banner(file, fileList){
+        console.log(fileList)
          Array.from(document.querySelector("input[name=banner]").files).forEach(file=>{
            if(this.fileList2.indexOf(file) == -1){
              this.fileList2.push(file);
           }
         });
       },
-
+      //点击logo返回首页
       btn_login(){
         this.$router.push({name:'landing_page'})
       },
@@ -271,7 +261,7 @@ text-align: left;width: 100%;
 //        console.log(this.fileList);
         let formData = new FormData();
         let that = this;
-
+        //console.log(this.fileList);return;
         if(this.fileList.length > 0){
           this.fileList.forEach(file=> {
 
@@ -285,14 +275,15 @@ text-align: left;width: 100%;
             formData.append("banner[]", file2);
         });
         }
+        
         if(this.istype=='ldy'){
           formData.append("upload_type", 1);
         }else{
           formData.append("upload_type", 2);
         }
 
-//        console.log(formData.getAll('ldy'));return false;
-        let _url = "http://sd.admin_sd.com/cms/material/material.php?type=upload_all";//上传文件接口地址
+      //  console.log(formData.getAll('ldy'));return false;
+        let _url = "/api/cms/material/material.php?type=upload_all";//上传文件接口地址
         this.axios({
           url: _url,
           method: 'post',
@@ -302,9 +293,12 @@ text-align: left;width: 100%;
           that.fileList2=[];
         //此处重置文件中间存储变量是为了相同文件能够重复传递
         this.$message.success(res.data.info);
+        this.dialogFormVisible = false
       }, (err) =>{
+        console.log(err)
+        console.log(err)
           this.fileList=[];
-
+          this.$message.error('提交失败！');
         })
 
 
