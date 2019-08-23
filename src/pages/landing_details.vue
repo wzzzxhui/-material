@@ -99,7 +99,6 @@
                                 </div>
                             </li>
                         </ul>
-                        <div class="clearfix"></div>
                         <ul class="pic_d">
                             <li v-for="(items,index) in item" :key="index">
                                 <div>
@@ -108,6 +107,7 @@
                                 </div>
                             </li>
                         </ul>
+                        <div class="clearfix"></div>
                     </div>
                 </el-col>
                 <el-col :span="8" class="de_right">
@@ -196,17 +196,19 @@ export default {
              let that = this;
              let id = that.$route.query.ID;
              this.axios.get('/api/cms/material/material.php?type=get_one_info&id='+id)
-                     .then(function (response) {
-                         let data = response.data.data;
-                         that.pic_t = data['pic_t'];
-                         that.item = data['item'];
-                         that.text = data['text'];
-                         that.chicuns = data['chicuns'];
-                         that.chicun_id = data['item'][0]['id'];
-                     })
-                     .catch(function (error) { // 请求失败处理
-                         that.$message.success(error);
-                     });
+                .then(function (response) {
+                    console.log(response)
+                    let data = response.data.data;
+                    that.pic_t = data['pic_t'];
+                    that.item = data['item'];
+                    that.text = data['text'];
+                    that.chicuns = data['chicuns'];
+                //  that.chicun_id = data['item'][0]['id'];
+                    // console.log(data['pic_t'])
+                })
+                .catch(function (error) { // 请求失败处理
+                    that.$message.success(error);
+                });
          },
 
          //导航

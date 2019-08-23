@@ -39,7 +39,7 @@
   width: 100%;
 }
 .down{
-    height: 60px;background: #f8f8f8;display: flex;flex-direction: row;justify-content: space-between;padding: 0 10px;
+    height: 60px;background: white;display: flex;flex-direction: row;justify-content: space-between;padding: 0 10px;border-top:1px #eee solid
 }
 .down span{
   min-width: 40px;line-height: 60px;padding-left: 30px; display: inline-block;text-align: left;color: #181818;
@@ -136,7 +136,6 @@ export default {
             console.log(response+'111')
             let data = response.data.data;
             that.list = data;
-           
             that.list_length = parseInt( response.data.list_length);
             })
             .catch(function (error) { // 请求失败处理
@@ -156,13 +155,12 @@ export default {
             let id = that.list[index].id;
             that.$router.push({name:"material_details",query:{'ID':id}});
          },
-         // 初始页currentPage、初始每页数据数pagesize和数据data
-
+        //每页显示个数选择器的选项设置
         handleSizeChange: function (size) {
             this.pagesize = size;
             this.get_all(this.navid);
-            
         },
+        //当前页数
         handleCurrentChange: function(currentPage){
             this.currentPage = currentPage;
             this.get_all(this.navid);

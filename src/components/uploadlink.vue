@@ -38,15 +38,21 @@
     props:['linkMsg','pid'],
     methods: {
         submitUpload(){
-            let _url = "/api/cms/material/material.php?type=upload_fix_by_link";//上传文件接口地址
-            this.axios({
-                url: _url,
-                method: 'post',
-                data: {"pid": this.pid, link_str: this.link_text},
-            }).then((res) => {
-              console.log(res)
-              this.dialogFormVisible = false
-            })
+          let that = this;
+          that.axios.post({
+            url:"/api/cms/material/material.php?type=upload_fix_by_link",//上传文件接口地址
+            method: 'post',
+            data: {"pid": that.pid, link_str: that.link_text},
+          })
+          .then(function (response) {
+            console.log(response);
+            that.btnlink = false;
+          })
+          .catch(function (error) {
+            console.log(error);
+            that.btnlink = false;
+          });
+
         },
 
       //物料页面入口

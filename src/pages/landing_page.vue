@@ -39,7 +39,7 @@
     width: 100%;
 }
 .down{
-    height: 60px;background: #f8f8f8;display: flex;flex-direction: row;justify-content: space-between;padding: 0 10px;
+    height: 60px;background: white;display: flex;flex-direction: row;justify-content: space-between;padding: 0 10px;border-top:1px #eee solid;
 }
 .down span{
   min-width: 40px;line-height: 60px;padding-left: 30px; display: inline-block;text-align: left;color: #181818;

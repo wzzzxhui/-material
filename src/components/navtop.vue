@@ -205,12 +205,12 @@ body{
         let that = this;
         Array.from(document.querySelector("input[name="+that.istype+"]").files).forEach(file=>{
           if(this.fileList.indexOf(file) == -1){
-            file['url']='blob:http://localhost:8082/f4b94c1c-a7dd-452a-b931-677cfa5d8753';
+            // file['url']='http://p6.qhimg.com/dmfd/320_180_/t01e41d5280a6639d3e.jpg?size=750x649';
+            file['url']=file.url;
             console.log(file)
             this.fileList.push(file);
           }
         });
-
       },
       change_banner(file, fileList){
         console.log(fileList)
