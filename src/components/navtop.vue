@@ -1,95 +1,3 @@
-<style scoped>
-body{
-  background-color: #ddd
-}
-.clearfix{
-  clear: both;
-}
-.nav{
-  width: 100%;height: 90px; background: white;position: fixed;top: 0;z-index: 9;-webkit-box-shadow: 0px 2px 10px rgba(0,0,0,0.1);box-shadow: 0px 2px 10px rgba(0,0,0,0.1)
-}
-.nav .logo{
-  height: 37px;float: left;margin: 26px 70px 26px 0;cursor: pointer;
-}
-.el-menu{
-  background: none;
-}
-.el-menu.el-menu--horizontal{
-  border-bottom: 0;margin-left: 110px;
-}
-.el-menu--horizontal>.el-menu-item{
-  height:90px; line-height: 90px;font-size: 16px;
-}
-.top-right{
-  position: absolute;right: 0;top: 0;height: 90px;
-}
-.el-menu--horizontal>.el-menu-item.is-active {
-  border-bottom: 4px solid #409EFF;color: #17A1FF;
-}
-.search{
-  margin: 30px 0 0 0;
-}
-.search>>>.el-input__inner{
-  border-radius: 15px 0 0 15px;height: 30px;line-height: 30px;
-}
-.search>>>.el-input-group__append{
-  border-radius: 0 15px 15px 0;color: white;background:linear-gradient(90deg,rgba(23,161,255,1),rgba(23,120,253,1));border-color: #17A1FF;
-}
-.top-right .el-button--small.is-round[data-v-47323bf2]{
-  height: 30px;line-height: 30px;padding: 0 15px;margin-top: 30px;
-}
-.top-right .el-button--small.is-round {
-  padding: 9px 15px;margin: 30px 0 0 30px;
-}
-/* 弹出框 */
-.isbox>>>.el-dialog__header{
-  display: none
-}
-.isbox>>>.el-dialog{
-  width: 760px;
-}
-.title_t{
-  float: left;font-size: 16px;line-height: 32px;
-}
-.upload-demo{
-  text-align: left;width: 100%;
-}
-.isbox>>>.el-dialog__body{
-  text-align: right;max-height: 600px;overflow: auto;
-}
-.isbox>>>.el-input--small{
-  margin-right: 100px;
-}
-.isbox .el-input--small{
-  width: 200px;
-}
-.dia-item{
-  position: relative;padding-bottom: 30px
-}
-.item_t{
-  height: 32px;
-}
-.isbox .upload-demo>>>.el-upload{
-  margin: 0;padding: 0;position: absolute;top: 0;right: 0;
-}
-.upload-demo>>>.el-upload__tip{
-  text-align: left;
-}
-.upload-demo>>>ul li{
-  float: left;width: 214px;height: auto; margin:0 20px 25px 0;padding: 0;border-radius: 0;
-}
-.upload-demo>>>ul li img{
-  width: 100%;height: auto;margin: 0;z-index: 0;
-}
-.upload-demo>>>.el-upload-list__item-name{
-  padding: 0;width: 100%;text-align: center
-}
-.upload-demo>>>.el-upload-list--picture .el-upload-list__item-name i{
-  display: none
-}
-/* 弹出框 */
-</style>
-
 <template>
   <div>
     <nav class="nav">
@@ -199,6 +107,12 @@ body{
         }
     },
     methods: {
+      navactive1(){
+        this.activeNav = 'landing_page'
+      }, 
+      navactive2(){
+        this.activeNav = 'material'
+      }, 
       change_parent(file, fileList){
         console.log(file)
         //判断上传文件数量
@@ -213,7 +127,6 @@ body{
         });
       },
       change_banner(file, fileList){
-        console.log(fileList)
          Array.from(document.querySelector("input[name=banner]").files).forEach(file=>{
            if(this.fileList2.indexOf(file) == -1){
              this.fileList2.push(file);
@@ -231,9 +144,8 @@ body{
       },
       //顶部查询
       btnsearch(){
-        if(this.search != ''){
-          this.$router.push({name:this.activeNav});
-        }
+        //触发父页面事件
+        this.$parent.fatherMethod();
       },
       //落地页弹窗
       btnlanding(){
@@ -247,11 +159,10 @@ body{
       },
       //删除物料
       handleRemove(file, fileList) {
-        alert('删除');
-        console.log(file, fileList);
+        // console.log(file, fileList);
       },
       handlePreview(file) {
-        console.log(file);
+        // console.log(file);
       },
       //文件上传
       submitUpload(){
@@ -295,8 +206,7 @@ body{
         this.$message.success(res.data.info);
         this.dialogFormVisible = false
       }, (err) =>{
-        console.log(err)
-        console.log(err)
+          console.log(err)
           this.fileList=[];
           this.$message.error('提交失败！');
         })
@@ -314,4 +224,97 @@ body{
     }
   }
 </script>
-
+<style scoped>
+body{
+  background-color: #ddd
+}
+.clearfix{
+  clear: both;
+}
+.nav{
+  width: 100%;height: 90px; background: white;position: fixed;top: 0;z-index: 9;-webkit-box-shadow: 0px 2px 10px rgba(0,0,0,0.1);box-shadow: 0px 2px 10px rgba(0,0,0,0.1)
+}
+.nav .logo{
+  height: 37px;float: left;margin: 26px 70px 26px 0;cursor: pointer;
+}
+.el-menu{
+  background: none;
+}
+.el-menu.el-menu--horizontal{
+  border-bottom: 0;margin-left: 110px;
+}
+.el-menu--horizontal>.el-menu-item{
+  height:90px; line-height: 90px;font-size: 16px;
+}
+.top-right{
+  position: absolute;right: 0;top: 0;height: 90px;
+}
+.el-menu--horizontal>.el-menu-item.is-active {
+  border-bottom: 4px solid #409EFF;color: #17A1FF;
+}
+.search{
+  margin: 30px 0 0 0;
+}
+.search>>>.el-input__inner{
+  border-radius: 15px 0 0 15px;height: 30px;line-height: 30px;
+}
+.search>>>.el-input-group__append{
+  border-radius: 0 15px 15px 0;color: white;background:linear-gradient(90deg,rgba(23,161,255,1),rgba(23,120,253,1));border-color: #17A1FF;
+}
+.top-right .el-button--small.is-round[data-v-47323bf2]{
+  height: 30px;line-height: 30px;padding: 0 15px;margin-top: 30px;
+}
+.top-right .el-button--small.is-round {
+  padding: 9px 15px;margin: 30px 0 0 30px;
+}
+/* 弹出框 */
+.isbox>>>.el-dialog__header{
+  display: none
+}
+.isbox>>>.el-dialog{
+  width: 760px;
+}
+.title_t{
+  float: left;font-size: 16px;line-height: 32px;
+}
+.upload-demo{
+  text-align: left;width: 100%;
+}
+.isbox>>>.el-upload-list{
+  min-height: 50px;
+}
+.isbox>>>.el-dialog__body{
+  text-align: right;max-height: 600px;overflow: auto;
+}
+.isbox>>>.el-input--small{
+  margin-right: 100px;
+}
+.isbox .el-input--small{
+  width: 200px;
+}
+.dia-item{
+  position: relative;padding-bottom: 30px
+}
+.item_t{
+  height: 32px;
+}
+.isbox .upload-demo>>>.el-upload{
+  margin: 0;padding: 0;position: absolute;top: 0;right: 0;
+}
+.upload-demo>>>.el-upload__tip{
+  text-align: left;
+}
+.upload-demo>>>ul li{
+  float: left;width: 214px;height: auto; margin:0 20px 25px 0;padding: 0;border-radius: 0;
+}
+.upload-demo>>>ul li img{
+  width: 100%;height: auto;margin: 0;z-index: 0;
+}
+.upload-demo>>>.el-upload-list__item-name{
+  padding: 0;width: 100%;text-align: center
+}
+.upload-demo>>>.el-upload-list--picture .el-upload-list__item-name i{
+  display: none
+}
+/* 弹出框 */
+</style>

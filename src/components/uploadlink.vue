@@ -1,15 +1,3 @@
-<style scoped>
-.islink>>>.istips{
-    text-align: left;color: #A2A1A1;font-size: 14px;line-height: 32px;
-}
-.islink>>>.el-dialog__body{
-    padding: 0 20px 20px;
-}
-.islink>>>.el-textarea__inner{
-    height: 200px;resize: none;overflow: auto
-}
-</style>
-
 <template>
     <div class="islink">
         <el-dialog
@@ -22,7 +10,7 @@
             <el-button @click="btnlinkNo">取 消</el-button>
             <el-button type="primary" @click="submitUpload">提 交</el-button>
         </span>
-        {{linkMsg}}
+        <!-- {{linkMsg}} -->
         </el-dialog>
 
     </div>
@@ -39,6 +27,7 @@
     methods: {
         submitUpload(){
           let that = this;
+          console.log(that.link_text)
           that.axios.post({
             url:"/api/cms/material/material.php?type=upload_fix_by_link",//上传文件接口地址
             method: 'post',
@@ -46,7 +35,7 @@
           })
           .then(function (response) {
             console.log(response);
-            that.btnlink = false;
+            // that.btnlink = false;
           })
           .catch(function (error) {
             console.log(error);
@@ -75,3 +64,14 @@
     }
   };
 </script>
+<style scoped>
+.islink>>>.istips{
+    text-align: left;color: #A2A1A1;font-size: 14px;line-height: 32px;
+}
+.islink>>>.el-dialog__body{
+    padding: 0 20px 20px;
+}
+.islink>>>.el-textarea__inner{
+    height: 200px;resize: none;overflow: auto
+}
+</style>

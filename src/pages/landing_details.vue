@@ -44,10 +44,10 @@
     box-shadow: 0px 2px 4px rgba(0,0,0,0.2);
 }
 .de_item .de_left .pic{
-    width: 100%;height: 174px;overflow: hidden;
+    width: 100%;height: 164px;overflow: hidden;
 }
 .de_item .de_left .pic_d li img{
-     width: 100%;height: 100%;
+     width: 100%;height: auto;
 }
 .de_item .de_left .pic_d li p{
     line-height: 40px;font-size: 14px;background: #f8f8f8;display: inline-block; width: 100%;
@@ -70,11 +70,15 @@
 .liMenu.active{
     color: #17A1FF;border-color: #17A1FF;
 }
-
+@media screen and (max-width: 1199px) {
+  .de_item .de_left .pic_d li{
+        height: 240px;
+    }
+}
 </style>
 <template>
     <div>
-        <navtop default_nav="landing_details"></navtop>
+        <navtop default_nav="landing_details" ref="Nav"></navtop>
         <div class="details inner" id="landing_details">
             <!-- 导航 -->
             <el-row>
@@ -82,8 +86,9 @@
                 <div class="meaus">
                     <label class="lable-l">分类：</label>
                     <el-tabs v-model="activeName" @tab-click="handleClick">
-                        <el-tab-pane label="最新" name="0"></el-tab-pane>
                         <el-tab-pane label="优选" name="2"></el-tab-pane>
+                        <el-tab-pane label="推广中" name="1"></el-tab-pane>
+                        <el-tab-pane label="待开发" name="3"></el-tab-pane>
                     </el-tabs>
                 </div>
             </el-row>
@@ -95,15 +100,16 @@
                             <li class="pt" v-for="(items,index) in pic_t" :key="index">
                                 <div>
                                     <div class="pic"><img :src="items.img"></div>
-                                    <p v-html="items.name"></p>
+                                    <p>{{items.name}} - {{items.wh}}</p>
                                 </div>
                             </li>
                         </ul>
+                        <div class="clearfix"></div>
                         <ul class="pic_d">
                             <li v-for="(items,index) in item" :key="index">
                                 <div>
                                     <div class="pic"><img :src="items.img"></div>
-                                    <p v-html="items.name"></p>
+                                    <p>{{items.name}} - {{items.wh}}</p>
                                 </div>
                             </li>
                         </ul>
@@ -155,18 +161,15 @@ export default {
     data (){
         return{
             pid:this.$route.query.ID,
-            activeName: 'nav1',//导航
+            activeName: this.$route.query.activeName,//导航
+            activeNav: 'landing_page',//导航默认选中
             pic_t:[
 //                {'id':'12','name':'第一页','url':'http://img.zcool.cn/community/01678455dac73e32f875a1323c144f.jpg'},
 //                {'id':'31','name':'第二页','url':'http://img.zcool.cn/community/01678455dac73e32f875a1323c144f.jpg'},
-//                {'id':'33','name':'第三页','url':'http://img.zcool.cn/community/01678455dac73e32f875a1323c144f.jpg'},
             ],
             item:[
 //                {'id':'23','name':'百度推广1','url':'/static/img/pic1.89ee279.png'},
 //                {'id':'43','name':'百度推广2','url':'http://hbimg.b0.upaiyun.com/792216e17b522e8e32de07936f9a3062b9ff9d3fc0a6a-CUYyrN_fw658'},
-//                {'id':'65','name':'百度推广3','url':'/static/img/pic1.89ee279.png'},
-//                {'id':'43','name':'百度推广4','url':'http://hbimg.b0.upaiyun.com/792216e17b522e8e32de07936f9a3062b9ff9d3fc0a6a-CUYyrN_fw658'},
-//                {'id':'65','name':'百度推广5','url':'http://hbimg.b0.upaiyun.com/792216e17b522e8e32de07936f9a3062b9ff9d3fc0a6a-CUYyrN_fw658'},
             ],
             chicun_index:0,
             chicuns:[],
@@ -187,29 +190,28 @@ export default {
     },
 
      methods: {
+        //获取数据
+        get_data:function(){
 
-         //获取数据
-         get_data:function(){
-
-             //发送get请求
-             let url = "";
-             let that = this;
-             let id = that.$route.query.ID;
-             this.axios.get('/api/cms/material/material.php?type=get_one_info&id='+id)
-                .then(function (response) {
-                    console.log(response)
-                    let data = response.data.data;
-                    that.pic_t = data['pic_t'];
-                    that.item = data['item'];
-                    that.text = data['text'];
-                    that.chicuns = data['chicuns'];
-                //  that.chicun_id = data['item'][0]['id'];
-                    // console.log(data['pic_t'])
-                })
-                .catch(function (error) { // 请求失败处理
-                    that.$message.success(error);
-                });
-         },
+            //发送get请求
+            let url = "";
+            let that = this;
+            let id = that.$route.query.ID;
+            this.axios.get('/api/cms/material/material.php?type=get_one_info&id='+id)
+            .then(function (response) {
+                console.log(response)
+                let data = response.data.data;
+                that.pic_t = data['pic_t'];
+                that.item = data['item'];
+                that.text = data['text'];
+                that.chicuns = data['chicuns'];
+            //  that.chicun_id = data['item'][0]['id'];
+                // console.log(data['pic_t'])
+            })
+            .catch(function (error) { // 请求失败处理
+                that.$message.success(error);
+            });
+        },
 
          //导航
         handleClick(tab, event) {
@@ -219,22 +221,25 @@ export default {
         btn_cc(obj,idx2){
             let id = obj.id;
             this.chicun_id = id;
+            console.log(obj)
 
         },
-
-         down(){
-             let id = this.chicun_id;
-             let pid = this.pid;
-             let that = this;
-             window.open('/api/cms/material/material.php?type=download_by_id&id='+id+'&pid='+pid);
-//             this.axios.get('/api/cms/material/material.php?type=download_by_id&id='+id)
-//                     .then(function (response) {
-//                         //window.open(response.data.data);
-//                     })
-//                     .catch(function (error) { // 请求失败处理
-//                         that.$message.success(error);
-//                     });
-         },
+        //下载图片
+        down(){
+        let id = this.chicun_id;
+        let pid = this.pid;
+        let that = this;
+        if(id == '0'){
+            this.$message({message: '请选择尺寸！',type: 'warning'});
+            return false
+        }else{
+            // window.open('/api/cms/material/material.php?type=download_by_id&id='+id+'&pid='+pid);
+            var alink = document.createElement("a");
+            alink.href = '/api/cms/material/material.php?type=download_by_id&id='+id+'&pid='+pid;
+            alink.download = "pic"; //图片名
+            alink.click();
+        }
+        },
 
         //补充
         btnbuchong(){
@@ -247,6 +252,7 @@ export default {
     },
     mounted:function(){
         let that = this;
+        this.$refs.Nav.navactive1(this.e);
     }
 
 }

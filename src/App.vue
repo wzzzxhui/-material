@@ -7,7 +7,25 @@
 
 <script>
 export default {
-  name: 'App'
+  name: 'App',
+  provide(){
+      return{
+          reload:this.reload
+      }
+  },
+  data(){
+    return{
+      isrouter:true
+    }
+  },
+  methods:{
+    reload(){
+      this.isrouter = false
+      this.$nextTick(function(){
+        this.isrouter = true
+      })
+    }
+  }
 }
 </script>
 

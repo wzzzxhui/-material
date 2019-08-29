@@ -64,6 +64,9 @@
 .de_right .padding_left{
     text-align: left;padding-left: 30px;font-size: 16px;
 }
+.de_right .padding_left p{
+    line-height: 26px;
+}
 .btn_top button{
     margin: 0 30px;width: 30%;
 }
@@ -80,7 +83,7 @@
 </style>
 <template>
     <div>
-         <navtop default_nav="material_details"></navtop>
+        <navtop default_nav="material_details" ref="Nav"></navtop>
         <div class="details inner" id="material_details">
             <!-- 导航 -->
             <el-row>
@@ -101,7 +104,7 @@
                             <li class="pt" v-for="(items,index) in pic_t" :key="index">
                                 <div>
                                     <div class="pic"><img :src="items.img"></div>
-                                    <p v-html="items.name"></p>
+                                    <p>{{items.name}} - {{items.wh}}</p>
                                 </div>
                             </li>
                             
@@ -110,7 +113,7 @@
                             <li class="pd" v-for="(items,index) in item" :key="index">
                                 <div>
                                     <div class="pic"><img :src="items.img"></div>
-                                    <p v-html="items.name"></p>
+                                    <p>{{items.name}} - {{items.wh}}</p>
                                 </div>
                             </li>
                         </ul>
@@ -124,13 +127,13 @@
                             <el-button type="primary" @click="btn_link">上传链接</el-button>
                         </div>
                         <div class="white_bj padding_left" v-for="(texts,index) in text" :key="index">
-                            <p>编号:{{texts.id}}</p>
-                            <p>大小:{{texts.size}}</p>
-                            <p>尺寸:{{texts.wh}}</p>
-                            <p>上传时间:{{texts.date}}</p>
-                            <p>展示量:{{texts.views}}</p>
-                            <p>点赞--{{texts.likes}}</p>
-                            <p>下载量:{{texts.downs}}</p>
+                            <p>编号：{{texts.id}}</p>
+                            <p>大小：{{texts.size}}</p>
+                            <p>尺寸：{{texts.wh}}</p>
+                            <p>上传时间：{{texts.date}}</p>
+                            <p>展示量：{{texts.views}}</p>
+                            <p>点赞：{{texts.likes}}</p>
+                            <p>下载量：{{texts.downs}}</p>
                         </div>
                         <div class="white_bj padding_left">
                             <!--<p>选择：格式</p>-->
@@ -143,7 +146,7 @@
                             </div>
                         </div>
                         <div class="white_bj xiazai">
-                            <el-button type="primary"  @click="down()">下载 </el-button>
+                            <el-button type="primary" @click="down()">下载 </el-button>
                         </div>
                     </div>
                 </el-col>
@@ -166,7 +169,7 @@ export default {
     data (){
         return{
             pid:this.$route.query.ID,
-            activeName: 'nav1',//导航
+            activeName: this.$route.query.activeName,//导航
             pic_t:[],
             item:[
 //                {'id':'23','name':'百度推广1','url':'/static/img/pic1.89ee279.png'},
@@ -200,41 +203,43 @@ export default {
         this.get_data()
     },
      methods: {
-
-         get_data:function(){
-
-             //发送get请求
-             let url = "";
-             let that = this;
-             let id = that.$route.query.ID;
-             this.axios.get('/api/cms/material/material.php?type=get_one_info&id='+id)
-                     .then(function (response) {
-                         console.log(response)
-                         let data = response.data.data;
-                         that.pic_t = data['pic_t'];
-                         that.item = data['item'];
-                         that.text = data['text'];
-                         that.chicuns = data['chicuns'];
-                         that.chicun_id = data['item'][0]['id'];
-                         that.geshis = data['geshi'];
-                     })
-                     .catch(function (error) { // 请求失败处理
-                         that.$message.success(error);
-                     });
-         },
-
+        get_data:function(){
+            //发送get请求
+            let url = "";
+            let that = this;
+            let id = that.$route.query.ID;
+            this.axios.get('/api/cms/material/material.php?type=get_one_info&id='+id)
+            .then(function (response) {
+                console.log(response)
+                let data = response.data.data;
+                that.pic_t = data['pic_t'];
+                that.item = data['item'];
+                that.text = data['text'];
+                that.chicuns = data['chicuns'];
+                that.geshis = data['geshi'];
+                if(data.chicuns.length > 1){
+                that.chicun_id = data['item'][0]['id'];
+                }
+            })
+            .catch(function (error) { // 请求失败处理
+                that.$message.success(error);
+            });
+        },
+        //下载图片
          down(){
-             let id = this.chicun_id;
-             let pid = this.pid;
-             let that = this;
-             window.open('/api/cms/material/material.php?type=download_by_id&id='+id+'&pid='+pid);
-//             this.axios.get('/api/cms/material/material.php?type=download_by_id&id='+id)
-//                     .then(function (response) {
-//                         //window.open(response.data.data);
-//                     })
-//                     .catch(function (error) { // 请求失败处理
-//                         that.$message.success(error);
-//                     });
+            let id = this.chicun_id;
+            let pid = this.pid;
+            let that = this;
+            if(id == '0'){
+                this.$message({message: '请选择尺寸！',type: 'warning'});
+                return false
+            }else{
+                var alink = document.createElement("a");
+                alink.href = '/api/cms/material/material.php?type=download_by_id&id='+id+'&pid='+pid;
+                alink.download = "pic"; //图片名
+                alink.click();
+            }
+
          },
          //导航
         handleClick(tab, event) {
@@ -262,6 +267,7 @@ export default {
     },
     mounted:function(){ 
         let that = this;
+        this.$refs.Nav.navactive2(this.e);
     }
     
 }

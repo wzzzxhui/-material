@@ -59,7 +59,7 @@
 </style>
 <template>
     <div>
-        <navtop default_nav="material"></navtop>
+        <navtop default_nav="material" ref="headerChild"></navtop>
         <div class="material inner" id="material">
              <!-- 导航 -->
             <el-row>
@@ -80,9 +80,9 @@
                                 <img :src="items.img">
                             </div>
                             <div class="down">
-                                <span class="down-item1">{{items.look}}</span>
-                                <span class="down-item2">{{items.zan}}</span>
-                                <span class="down-item3">{{items.zai}}</span>
+                                <span class="down-item1">{{items.views}}</span>
+                                <span class="down-item2">{{items.likes}}</span>
+                                <span class="down-item3">{{items.downs}}</span>
                             </div>
                         </div>
                 </el-col>
@@ -92,7 +92,7 @@
                     @size-change="handleSizeChange"
                     @current-change="handleCurrentChange"
                     :current-page="currentPage"
-                    :page-sizes="[5, 10, 20, 40]"
+                    :page-sizes="[8, 12, 16, 20]"
                     :page-size="pagesize"
                     layout="total, sizes, prev, pager, next, jumper"
                     :total="list_length">
@@ -106,16 +106,16 @@ import navtop from '@/components/navtop' // top nav
 export default {
     data (){
         return{
-            activeName: 'nav1',//导航
+            activeName: '0',//导航
             currentPage:1, //初始页
-            pagesize:10,    //每页的数据
-            list:[
-
-            ],
+            pagesize:12,    //每页的数据
+            list:[],
+            key:'',
             navid:'1',
             list_length:10
         }
     },
+    inject:['reload'],
     created: function () {
 //        let send_key = this.$route.params.key;
 //        if(send_key != '' && typeof (send_key) != 'undefined' && send_key != null){
@@ -125,15 +125,22 @@ export default {
         this.get_all(1)
     },
      methods: {
-
+        //查询
+        fatherMethod(tab, event) {
+            this.key = this.$refs.headerChild.search
+            console.log(this.key);
+            //this.navid = tab.name;
+            console.log(this.navid)
+            this.get_all(this.navid);
+        },
          //获取列表
          get_all:function(status){
             //发送get请求
             let url = "";
             let that =this;
-            this.axios.get('/api/cms/material/material.php?type=get_all&upload_type=2&status='+status+'&page_size='+this.pagesize+'&current_page='+this.currentPage)
+            this.axios.get('/api/cms/material/material.php?type=get_all&upload_type=2&status='+status+'&page_size='+this.pagesize+'&current_page='+this.currentPage+'&key='+this.key)
             .then(function (response) {
-            console.log(response+'111')
+            console.log(response)
             let data = response.data.data;
             that.list = data;
             that.list_length = parseInt( response.data.list_length);
@@ -153,7 +160,7 @@ export default {
             //获取点击对象
             let that = this;
             let id = that.list[index].id;
-            that.$router.push({name:"material_details",query:{'ID':id}});
+            that.$router.push({name:"material_details",query:{'ID':id,'activeName':that.activeName}});
          },
         //每页显示个数选择器的选项设置
         handleSizeChange: function (size) {
@@ -165,7 +172,6 @@ export default {
             this.currentPage = currentPage;
             this.get_all(this.navid);
         }
-
     },
     components:{
         navtop

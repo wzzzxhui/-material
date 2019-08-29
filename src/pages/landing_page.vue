@@ -59,7 +59,7 @@
 </style>
 <template>
     <div>
-        <navtop default_nav="landing_page"></navtop>
+        <navtop default_nav="landing_page" ref="headerChild"></navtop>
         <div class="landing_page inner" id="landing_page">
              <!-- 导航 -->
             <el-row>
@@ -109,30 +109,38 @@ import navtop from '@/components/navtop' // top nav
 export default {
     data (){
         return{
-            activeName: '1',//导航
+            activeName: '2',//导航
             currentPage:1, //初始页
-            pagesize:10,    //每页的数据
+            pagesize:12,    //每页的数据
             list:[],
             navid:'1',
             key:'',
             list_length:10
         }
     },
-
+    inject:['reload'],
     created: function () {
         this.get_all(1)
     },
 
     methods: {
+        //查询
+        fatherMethod() {
+           this.key = this.$refs.headerChild.search
+            console.log(this.key);
+            //this.navid = tab.name;
+            console.log(this.navid)
+            this.get_all(this.navid);
+        },
          //获取列表
          get_all:function(status){
             //发送get请求
             let url = "";
             let that = this;
-            this.axios.get('/api/cms/material/material.php?type=get_all&upload_type=1&status='+status+'&page_size='+this.pagesize+'&current_page='+this.currentPage)
+            this.axios.get('/api/cms/material/material.php?type=get_all&upload_type=1&status='+status+'&page_size='+this.pagesize+'&current_page='+this.currentPage+'&key='+that.key)
             // +'&key='+this.aaa
             .then(function (response) {
-                console.log(response+'111');
+                console.log(response);
                 let data = response.data.data;
                 that.list = data;
                 that.list_length = parseInt( response.data.list_length);
@@ -150,23 +158,20 @@ export default {
         },
         //点击查看详情
         getData:function (index,event) {
+            
             //获取点击对象
             let that = this
             let id = that.list[index].id;
-            that.$router.push({name:"landing_details",query:{'ID':id}});
+            that.$router.push({name:"landing_details",query:{'ID':id,'activeName':that.activeName}});
         },
          // 初始页currentPage、初始每页数据数pagesize和数据data
         handleSizeChange: function (size) {
             this.pagesize = size;
-             this.navid = tab.name;
-             this.get_all(this.navid);
-            
+            this.get_all(this.navid);
         },
         handleCurrentChange: function(currentPage){
             this.currentPage = currentPage;
-             this.navid = tab.name;
-             this.get_all(this.navid);
-           
+            this.get_all(this.navid);
         }
     },
     components:{
