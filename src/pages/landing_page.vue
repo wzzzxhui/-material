@@ -56,6 +56,12 @@
 .ispages{
     width: 100%;display: inline-block;padding: 20px 0 40px;
 }
+@media screen and (min-width: 1200px) and (max-width: 1399px) {
+  .main .main-item .pic{height:356px;}
+}
+@media screen and (max-width: 1199px) {
+  .main .main-item .pic{height:294px;}
+}
 </style>
 <template>
     <div>
@@ -127,9 +133,6 @@ export default {
         //查询
         fatherMethod() {
            this.key = this.$refs.headerChild.search
-            console.log(this.key);
-            //this.navid = tab.name;
-            console.log(this.navid)
             this.get_all(this.navid);
         },
          //获取列表
@@ -140,13 +143,12 @@ export default {
             this.axios.get('/api/cms/material/material.php?type=get_all&upload_type=1&status='+status+'&page_size='+this.pagesize+'&current_page='+this.currentPage+'&key='+that.key)
             // +'&key='+this.aaa
             .then(function (response) {
-                console.log(response);
                 let data = response.data.data;
                 that.list = data;
                 that.list_length = parseInt( response.data.list_length);
             })
             .catch(function (error) { // 请求失败处理
-                console.log(error+'222');
+                console.log(error);
             });
          },
 

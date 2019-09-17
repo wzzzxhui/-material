@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <!-- <img src="./assets/logo.png"> -->
-    <router-view/>
+    <router-view v-if="isRouterAlive" />
   </div>
 </template>
 
@@ -10,19 +10,20 @@ export default {
   name: 'App',
   provide(){
       return{
-          reload:this.reload
+          reload:this.reload//刷新
       }
   },
   data(){
     return{
-      isrouter:true
+      isRouterAlive:true
     }
   },
   methods:{
+    //页面刷新
     reload(){
-      this.isrouter = false
+      this.isRouterAlive = false
       this.$nextTick(function(){
-        this.isrouter = true
+        this.isRouterAlive = true
       })
     }
   }

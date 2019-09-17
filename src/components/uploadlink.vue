@@ -26,24 +26,26 @@
     props:['linkMsg','pid'],
     methods: {
         submitUpload(){
-          let that = this;
-          console.log(that.link_text)
-          that.axios.post({
-            url:"/api/cms/material/material.php?type=upload_fix_by_link",//上传文件接口地址
-            method: 'post',
-            data: {"pid": that.pid, link_str: that.link_text},
-          })
-          .then(function (response) {
-            console.log(response);
-            // that.btnlink = false;
-          })
-          .catch(function (error) {
-            console.log(error);
+            let that = this;
+            let _url = "/api/cms/material/material.php?type=upload_fix_by_link";//上传文件接口地址
+            var params = new URLSearchParams();
+            params.append('pid',this.pid);
+            params.append('link_str',this.link_text);
+            that.axios({
+                method: 'post',
+                url: _url,
+                data: params
+            })
+            .then(function (res) {
+            that.$message.success(res.data.info);
             that.btnlink = false;
-          });
-
+            this.reload();
+            })
+            .catch(function (error) {
+              that.$message.success(error.data.info);
+              that.btnlink = false;
+            });
         },
-
       //物料页面入口
       material_link(e){
         this.btnlink = true;

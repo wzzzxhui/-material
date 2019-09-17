@@ -30,7 +30,7 @@
     -webkit-box-shadow: 0px 4px 10px rgba(0,0,0,0.4);box-shadow: 0px 4px 10px rgba(0,0,0,0.4);
 }
 .material>>>.main .main-item .pic{
-   height: 215px;overflow: hidden;position: relative;background: white;
+   height: 160px;overflow: hidden;position: relative;background: white;
 }
 .main .main-item .pic span{
    position: absolute;right: 0;top: 0;width: 62px;height: 24px;background: #62B8F2;border-radius: 0 0 0 16px;font-size: 12px;color: white;line-height: 24px;
@@ -55,6 +55,12 @@
 }
 .ispages{
     width: 100%;display: inline-block;padding: 20px 0 40px;
+}
+@media screen and (min-width: 1200px) and (max-width: 1399px) {
+  .material>>>.main .main-item .pic{height:136px;}
+}
+@media screen and (max-width: 1199px) {
+  .material>>>.main .main-item .pic{height:110px;}
 }
 </style>
 <template>
@@ -128,9 +134,6 @@ export default {
         //查询
         fatherMethod(tab, event) {
             this.key = this.$refs.headerChild.search
-            console.log(this.key);
-            //this.navid = tab.name;
-            console.log(this.navid)
             this.get_all(this.navid);
         },
          //获取列表
@@ -140,13 +143,12 @@ export default {
             let that =this;
             this.axios.get('/api/cms/material/material.php?type=get_all&upload_type=2&status='+status+'&page_size='+this.pagesize+'&current_page='+this.currentPage+'&key='+this.key)
             .then(function (response) {
-            console.log(response)
             let data = response.data.data;
             that.list = data;
             that.list_length = parseInt( response.data.list_length);
             })
             .catch(function (error) { // 请求失败处理
-                console.log(error+'222');
+                console.log(error);
             });
          },
 

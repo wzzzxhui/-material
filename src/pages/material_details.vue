@@ -24,7 +24,7 @@
     background: white;padding:0 22px 22px;
 }
 .de_item .de_left .grid-content h5{
-    text-align: left;font-size: 14px;line-height: 44px
+    text-align: left;font-size: 14px;line-height: 24px;padding-top: 10px;
 }
 .de_item .de_left .grid-content img{
     width: 100%;
@@ -67,6 +67,9 @@
 .de_right .padding_left p{
     line-height: 26px;
 }
+.de_right .padding_left p span{
+    width: 80px;text-align: right;display: inline-block;
+}
 .btn_top button{
     margin: 0 30px;width: 30%;
 }
@@ -74,7 +77,7 @@
     width: 80%;
 }
 .de_right>>>.liMenu{
-    width:20%;margin: 15px 15px 15px 0;
+    width:20%;margin: 15px 15px 15px 0;padding: 9px 0;text-align: center;
 }
 .liMenu.active{
     color: #17A1FF;border-color: #17A1FF;
@@ -127,13 +130,13 @@
                             <el-button type="primary" @click="btn_link">上传链接</el-button>
                         </div>
                         <div class="white_bj padding_left" v-for="(texts,index) in text" :key="index">
-                            <p>编号：{{texts.id}}</p>
-                            <p>大小：{{texts.size}}</p>
-                            <p>尺寸：{{texts.wh}}</p>
-                            <p>上传时间：{{texts.date}}</p>
-                            <p>展示量：{{texts.views}}</p>
-                            <p>点赞：{{texts.likes}}</p>
-                            <p>下载量：{{texts.downs}}</p>
+                            <p><span>编号：</span>{{texts.id}}</p>
+                            <p><span>大小：</span>{{texts.size}}</p>
+                            <p><span>尺寸：</span>{{texts.wh}}</p>
+                            <p><span>上传时间：</span>{{texts.date}}</p>
+                            <p><span>展示量：</span>{{texts.views}}</p>
+                            <p><span>点赞：</span>{{texts.likes}}</p>
+                            <p><span>下载量：</span>{{texts.downs}}</p>
                         </div>
                         <div class="white_bj padding_left">
                             <!--<p>选择：格式</p>-->
@@ -190,9 +193,6 @@ export default {
             chicun_id :0
         }
     },
-    //  beforeCreate(){
-    //     console.log('222')
-    // },
     components:{
         navtop,
         upload,
@@ -210,7 +210,6 @@ export default {
             let id = that.$route.query.ID;
             this.axios.get('/api/cms/material/material.php?type=get_one_info&id='+id)
             .then(function (response) {
-                console.log(response)
                 let data = response.data.data;
                 that.pic_t = data['pic_t'];
                 that.item = data['item'];
@@ -247,8 +246,6 @@ export default {
         },
         //格式
         btn_gs(geshi,idx){
-            console.log(geshi);
-            console.log(idx +'选中');
             this.geshi_index=idx;
         },
         //尺寸

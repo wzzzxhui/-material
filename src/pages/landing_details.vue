@@ -24,7 +24,7 @@
     background: white;padding:0 22px 22px;
 }
 .de_item .de_left .grid-content h5{
-    text-align: left;font-size: 14px;line-height: 44px
+    text-align: left;font-size: 14px;line-height: 24px;padding-top: 10px;
 }
 .de_item .de_left .grid-content img{
     width: 100%;
@@ -44,7 +44,7 @@
     box-shadow: 0px 2px 4px rgba(0,0,0,0.2);
 }
 .de_item .de_left .pic{
-    width: 100%;height: 164px;overflow: hidden;
+    width: 100%;height: auto;overflow: hidden;
 }
 .de_item .de_left .pic_d li img{
      width: 100%;height: auto;
@@ -58,23 +58,26 @@
 .de_right .padding_left{
     text-align: left;padding-left: 30px;font-size: 16px;
 }
+.de_right .padding_left p span{
+    width: 100px;text-align: right;display: inline-block;
+}
 .btn_top button{
-    margin: 0 30px;width: 30%;
+    margin: 0 30px;width: 30%;padding: 12px 0;
 }
 .de_right .xiazai button{
     width: 80%;
 }
 .de_right>>>.liMenu{
-    width: 20%;margin: 15px 15px 15px 0;
+    width: 20%;margin: 15px 15px 15px 0;padding: 9px 0;text-align: center;
 }
 .liMenu.active{
     color: #17A1FF;border-color: #17A1FF;
 }
-@media screen and (max-width: 1199px) {
+/* @media screen and (max-width: 1199px) {
   .de_item .de_left .pic_d li{
         height: 240px;
     }
-}
+} */
 </style>
 <template>
     <div>
@@ -123,13 +126,18 @@
                             <el-button type="primary" @click="btn_link">上传链接</el-button>
                         </div>
                         <div class="white_bj padding_left" v-for="(texts,index) in text" :key="index">
-                            <p>编号:{{texts.id}}</p>
-                            <p>大小:{{texts.size}}</p>
-                            <p>尺寸:{{texts.wh}}</p>
-                            <p>上传时间:{{texts.date}}</p>
-                            <p>展示量:{{texts.views}}</p>
-                            <p>点赞--{{texts.likes}}</p>
-                            <p>下载量:{{texts.downs}}</p>
+                            <p><span>作品ID：</span>{{texts.id}}</p>
+                            <p><span>文件大小：</span>{{texts.size}}</p>
+                            <p><span>上传时间：</span>{{texts.date}}</p>
+                            <p><span>预览：</span>00000次</p>
+                            <p><span>点击：</span> 00000次</p>
+                            <p><span>状态：</span> 使用中</p>
+                            <p><span>尺寸：</span>{{texts.wh}}</p>
+                            <p><span>使用平台数：</span>0000</p>
+                            
+                            <!-- <p>展示量：{{texts.views}}</p>
+                            <p>点赞：{{texts.likes}}</p>
+                            <p>下载量：{{texts.downs}}</p> -->
                         </div>
                         <div class="white_bj padding_left">
                             <p>选择banner图</p>
@@ -199,14 +207,12 @@ export default {
             let id = that.$route.query.ID;
             this.axios.get('/api/cms/material/material.php?type=get_one_info&id='+id)
             .then(function (response) {
-                console.log(response)
                 let data = response.data.data;
                 that.pic_t = data['pic_t'];
                 that.item = data['item'];
                 that.text = data['text'];
                 that.chicuns = data['chicuns'];
-            //  that.chicun_id = data['item'][0]['id'];
-                // console.log(data['pic_t'])
+                // that.chicun_id = data['item'][0]['id'];
             })
             .catch(function (error) { // 请求失败处理
                 that.$message.success(error);
@@ -221,24 +227,21 @@ export default {
         btn_cc(obj,idx2){
             let id = obj.id;
             this.chicun_id = id;
-            console.log(obj)
-
         },
         //下载图片
         down(){
-        let id = this.chicun_id;
-        let pid = this.pid;
-        let that = this;
-        if(id == '0'){
-            this.$message({message: '请选择尺寸！',type: 'warning'});
-            return false
-        }else{
-            // window.open('/api/cms/material/material.php?type=download_by_id&id='+id+'&pid='+pid);
-            var alink = document.createElement("a");
-            alink.href = '/api/cms/material/material.php?type=download_by_id&id='+id+'&pid='+pid;
-            alink.download = "pic"; //图片名
-            alink.click();
-        }
+            let id = this.chicun_id;
+            let pid = this.pid;
+            let that = this;
+            if(id == '0'){
+                this.$message({message: '请选择尺寸！',type: 'warning'});
+                return false
+            }else{
+                var alink = document.createElement("a");
+                alink.href = '/api/cms/material/material.php?type=download_by_id&id='+id+'&pid='+pid;
+                alink.download = "pic"; //图片名
+                alink.click();
+            }
         },
 
         //补充
@@ -254,7 +257,6 @@ export default {
         let that = this;
         this.$refs.Nav.navactive1(this.e);
     }
-
 }
 </script>
 

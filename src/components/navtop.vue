@@ -40,7 +40,6 @@
             :on-remove="handleRemove"
             :file-list="fileList"
             list-type="picture"
-            multiple
             :limit="10"
             :auto-upload="false">
             <el-button size="small" type="primary">选择文件</el-button>
@@ -59,12 +58,11 @@
             :on-change="change_banner"
             :on-preview="handlePreview"
             :on-success="issuccess"
-            :on-remove="handleRemove"
+            :on-remove="handleRemove2"
             :file-list="fileList2"
             list-type="picture"
             :limit="10"
             name="banner"
-            multiple
             :auto-upload="false">
             <el-button size="small" type="primary">选择文件</el-button>
             <!-- <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div> -->
@@ -100,6 +98,7 @@
         ],
       };
     },
+    inject:['reload'],
     created:function(){
         this.activeNav = this.$route.params.activeNav?this.$route.params.activeNav:this.default_nav;
         if(!this.activeNav){
@@ -114,24 +113,25 @@
         this.activeNav = 'material'
       }, 
       change_parent(file, fileList){
-        console.log(file)
         //判断上传文件数量
         let that = this;
+        let file_url = file.url;
+        
         Array.from(document.querySelector("input[name="+that.istype+"]").files).forEach(file=>{
           if(this.fileList.indexOf(file) == -1){
-            // file['url']='http://p6.qhimg.com/dmfd/320_180_/t01e41d5280a6639d3e.jpg?size=750x649';
-            file['url']=file.url;
-            console.log(file)
+            file['url']=file_url;
             this.fileList.push(file);
           }
         });
       },
       change_banner(file, fileList){
-         Array.from(document.querySelector("input[name=banner]").files).forEach(file=>{
-           if(this.fileList2.indexOf(file) == -1){
-             this.fileList2.push(file);
-          }
-        });
+        let file_url = file.url;
+        Array.from(document.querySelector("input[name=banner]").files).forEach(file=>{
+          if(this.fileList2.indexOf(file) == -1){
+            file['url']=file_url;
+            this.fileList2.push(file);
+        }
+      });
       },
       //点击logo返回首页
       btn_login(){
@@ -157,9 +157,13 @@
         this.istype = 'wuliao'
         this.dialogFormVisible = true
       },
-      //删除物料
+      //删除物料1
       handleRemove(file, fileList) {
-        // console.log(file, fileList);
+        this.fileList.splice(file, 1);
+      },
+      //删除物料2
+      handleRemove2(file, fileList) {
+        this.fileList2.splice(file, 1);
       },
       handlePreview(file) {
         // console.log(file);
@@ -168,21 +172,17 @@
       submitUpload(){
 //        this.$refs.upload.submit();
 //        this.$message({message: '上传成功',type: 'success'});
-//        this.dialogFormVisible = false
-//        console.log(this.fileList);
         let formData = new FormData();
         let that = this;
         //console.log(this.fileList);return;
         if(this.fileList.length > 0){
           this.fileList.forEach(file=> {
-
           formData.append(that.istype+'[]', file);
         });
         }
 
         if(this.fileList2.length > 0){
           this.fileList2.forEach(file2=> {
-
             formData.append("banner[]", file2);
         });
         }
@@ -192,8 +192,6 @@
         }else{
           formData.append("upload_type", 2);
         }
-
-      //  console.log(formData.getAll('ldy'));return false;
         let _url = "/api/cms/material/material.php?type=upload_all";//上传文件接口地址
         this.axios({
           url: _url,
@@ -204,9 +202,10 @@
           that.fileList2=[];
         //此处重置文件中间存储变量是为了相同文件能够重复传递
         this.$message.success(res.data.info);
-        this.dialogFormVisible = false
+        this.dialogFormVisible = false;
+        this.reload();
       }, (err) =>{
-          console.log(err)
+          // console.log(err)
           this.fileList=[];
           this.$message.error('提交失败！');
         })
@@ -221,6 +220,14 @@
     mounted:function(){
       //默认跳转首页
 //      this.$router.push({path:'landing_page'})
+    },
+    watch:{
+      dialogFormVisible:function(obj){
+        if(obj == false){
+          this.fileList=[];
+          this.fileList2=[];
+        }
+      }
     }
   }
 </script>
