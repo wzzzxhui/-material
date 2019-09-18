@@ -208,7 +208,7 @@ export default {
             let url = "";
             let that = this;
             let id = that.$route.query.ID;
-            this.axios.get('/api/cms/material/material.php?type=get_one_info&id='+id)
+            this.axios.get('/cms/material/material.php?type=get_one_info&id='+id)
             .then(function (response) {
                 let data = response.data.data;
                 that.pic_t = data['pic_t'];
@@ -234,7 +234,7 @@ export default {
                 return false
             }else{
                 var alink = document.createElement("a");
-                alink.href = '/api/cms/material/material.php?type=download_by_id&id='+id+'&pid='+pid;
+                alink.href = '/cms/material/material.php?type=download_by_id&id='+id+'&pid='+pid;
                 alink.download = "pic"; //图片名
                 alink.click();
             }

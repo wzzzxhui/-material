@@ -136,7 +136,7 @@ text-align: left;width: 100%;min-height: 50px;
         }
         
         formData.append("pid", pid);
-        let _url = "/api/cms/material/material.php?type=upload_fix";//上传文件接口地址
+        let _url = "/cms/material/material.php?type=upload_fix";//上传文件接口地址
         this.axios({
           url: _url,
           method: 'post',
