@@ -192,7 +192,7 @@
         }else{
           formData.append("upload_type", 2);
         }
-        let _url = "/api/cms/material/material.php?type=upload_all";//上传文件接口地址
+        let _url = "/cms/material/material.php?type=upload_all";//上传文件接口地址
         this.axios({
           url: _url,
           method: 'post',

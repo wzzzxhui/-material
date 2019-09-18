@@ -27,7 +27,7 @@
     methods: {
         submitUpload(){
             let that = this;
-            let _url = "/api/cms/material/material.php?type=upload_fix_by_link";//上传文件接口地址
+            let _url = "/cms/material/material.php?type=upload_fix_by_link";//上传文件接口地址
             var params = new URLSearchParams();
             params.append('pid',this.pid);
             params.append('link_str',this.link_text);
