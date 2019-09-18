@@ -18,11 +18,11 @@ methods: {
     // 初始页currentPage、初始每页数据数pagesize和数据data
     handleSizeChange: function (size) {
             this.pagesize = size;
-            console.log(this.pagesize)  //每页下拉显示数据
+            // console.log(this.pagesize)  //每页下拉显示数据
     },
     handleCurrentChange: function(currentPage){
             this.currentPage = currentPage;
-            console.log(this.currentPage)  //点击第几页
+            // console.log(this.currentPage)  //点击第几页
     }
 },
 }

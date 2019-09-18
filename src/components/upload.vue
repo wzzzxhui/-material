@@ -61,7 +61,7 @@ text-align: left;width: 100%;min-height: 50px;
             <!-- 上传物料开始 -->
             <el-dialog title="补充尺寸" :visible.sync="dialogFormVisible">
               <div class="item_t">
-                <span class="title_t">补充尺寸{{psMsg}}</span>
+                <span class="title_t">补充尺寸</span>
               </div>
               <el-divider></el-divider>
               <el-upload
@@ -76,7 +76,6 @@ text-align: left;width: 100%;min-height: 50px;
               :on-change="change_parent"
               :limit="10"
               name="files"
-              multiple
               :auto-upload="false">
               <el-button size="small" type="primary">选择文件</el-button>
               <!-- <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div> -->
@@ -98,7 +97,7 @@ text-align: left;width: 100%;min-height: 50px;
       return {
         dialogFormVisible: false,//弹出层
         fileList: [],
-        ispsMsg:this.psMsg,
+        ispsMsg:this.psMsg,//
 //        pid:this.pid
       };
     },
@@ -106,8 +105,8 @@ text-align: left;width: 100%;min-height: 50px;
     methods: {
       //删除物料
       handleRemove(file, fileList) {
-        alert('删除');
-        console.log(file, fileList);
+        this.fileList.splice(file, 1);
+        // console.log(file, fileList);
       },
       handlePreview(file) {
         console.log(file);
@@ -115,9 +114,11 @@ text-align: left;width: 100%;min-height: 50px;
       change_parent(file, fileList){
         //判断上传文件数量
         let that = this;
+        let file_url = file.url;
         Array.from(document.querySelector("input[name=files]").files).forEach(file=>{
           if(that.fileList.indexOf(file) == -1){
-          this.fileList.push(file);
+            file['url']=file_url;
+            this.fileList.push(file);
         }
       });
 
@@ -130,13 +131,12 @@ text-align: left;width: 100%;min-height: 50px;
         let pid = this.pid;
         if(this.fileList.length > 0){
           this.fileList.forEach(file=> {
-
             formData.append('files[]', file);
-        });
+          });
         }
+        
         formData.append("pid", pid);
-//        console.log(formData.getAll('ldy'));return false;
-        let _url = "http://sd.admin_sd.com/cms/material/material.php?type=upload_fix";//上传文件接口地址
+        let _url = "/api/cms/material/material.php?type=upload_fix";//上传文件接口地址
         this.axios({
           url: _url,
           method: 'post',
@@ -145,6 +145,8 @@ text-align: left;width: 100%;min-height: 50px;
           that.fileList=[];
         //此处重置文件中间存储变量是为了相同文件能够重复传递
         this.$message.success(res.data.info);
+        this.dialogFormVisible = false
+        this.reload();
       }, (err) =>{
           this.fileList=[];
         })
@@ -157,6 +159,14 @@ text-align: left;width: 100%;min-height: 50px;
       },
       mabtn(){
         this.dialogFormVisible = true
+      }
+    },
+    watch:{
+      //监听弹出框
+      dialogFormVisible:function(obj){
+        if(obj == false){
+          this.fileList=[];
+        }
       }
     }
   }

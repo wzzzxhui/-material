@@ -1,15 +1,3 @@
-<style scoped>
-.islink>>>.istips{
-    text-align: left;color: #A2A1A1;font-size: 14px;line-height: 32px;
-}
-.islink>>>.el-dialog__body{
-    padding: 0 20px 20px;
-}
-.islink>>>.el-textarea__inner{
-    height: 200px;resize: none;overflow: auto
-}
-</style>
-
 <template>
     <div class="islink">
         <el-dialog
@@ -22,7 +10,7 @@
             <el-button @click="btnlinkNo">取 消</el-button>
             <el-button type="primary" @click="submitUpload">提 交</el-button>
         </span>
-        {{linkMsg}}
+        <!-- {{linkMsg}} -->
         </el-dialog>
 
     </div>
@@ -38,14 +26,26 @@
     props:['linkMsg','pid'],
     methods: {
         submitUpload(){
-            let _url = "http://sd.admin_sd.com/cms/material/material.php?type=upload_fix_by_link";//上传文件接口地址
-            this.axios({
-                url: _url,
+            let that = this;
+            let _url = "/api/cms/material/material.php?type=upload_fix_by_link";//上传文件接口地址
+            var params = new URLSearchParams();
+            params.append('pid',this.pid);
+            params.append('link_str',this.link_text);
+            that.axios({
                 method: 'post',
-                data: {"pid": this.pid, link_str: this.link_text},
+                url: _url,
+                data: params
+            })
+            .then(function (res) {
+            that.$message.success(res.data.info);
+            that.btnlink = false;
+            this.reload();
+            })
+            .catch(function (error) {
+              that.$message.success(error.data.info);
+              that.btnlink = false;
             });
         },
-
       //物料页面入口
       material_link(e){
         this.btnlink = true;
@@ -66,3 +66,14 @@
     }
   };
 </script>
+<style scoped>
+.islink>>>.istips{
+    text-align: left;color: #A2A1A1;font-size: 14px;line-height: 32px;
+}
+.islink>>>.el-dialog__body{
+    padding: 0 20px 20px;
+}
+.islink>>>.el-textarea__inner{
+    height: 200px;resize: none;overflow: auto
+}
+</style>
