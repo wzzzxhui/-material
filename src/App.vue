@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <!-- <img src="./assets/logo.png"> -->
-    <router-view v-if="isRouterAlive" />
+    <router-view v-if="isRouterAlive" ></router-view>
   </div>
 </template>
 

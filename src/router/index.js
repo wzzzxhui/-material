@@ -8,7 +8,7 @@ import landing_details from '@/pages/landing_details'
 Vue.use(Router)
 
 export default new Router({
-  mode:'history',
+  mode:'hash',
   routes: [
     //{
     //  path: '/index',
