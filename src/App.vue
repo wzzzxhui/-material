@@ -35,8 +35,8 @@ export default {
 html,body,h1,h2,h3,h4,h5,h6,div,dl,dt,dd,ul,ol,li,p,blockquote,pre,hr,figure,table,caption,th,td,form,fieldset,legend,input,button,textarea,menu{margin:0;padding:0}
 html,body,fieldset,img,iframe,abbr{border:0;}
 body, html {width: 100%; font-weight: normal;}
-body{ margin: 0;padding: 0;background: #F1F1F1}
-#app {font-family: 'Avenir', Helvetica, Arial, sans-serif;-webkit-font-smoothing: antialiased;-moz-osx-font-smoothing: grayscale;text-align: center;color: #2c3e50;}
+body{ margin: 0;padding: 0;background: #F1F1F1;}
+#app {font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;-webkit-font-smoothing: antialiased;-moz-osx-font-smoothing: grayscale;text-align: center;color: #2c3e50;}
 li{list-style:none;}
 textarea{overflow:auto;resize:none;}
 a,button{cursor:pointer;}

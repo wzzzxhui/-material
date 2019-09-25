@@ -24,7 +24,7 @@
     margin-bottom: 30px;padding: 0 10px;
 }
 .main .pic-item{
-    -webkit-box-shadow: 0px 2px 4px rgba(0,0,0,0.2);box-shadow: 0px 2px 4px rgba(0,0,0,0.2)
+    -webkit-box-shadow: 0px 2px 4px rgba(0,0,0,0.2);box-shadow: 0px 2px 4px rgba(0,0,0,0.2);cursor: pointer;
 }
 .main .pic-item:hover{
     -webkit-box-shadow: 0px 4px 10px rgba(0,0,0,0.4);box-shadow: 0px 4px 10px rgba(0,0,0,0.4);
@@ -85,8 +85,8 @@
             </el-row>
             <el-row class="main" :data="list.slice((currentPage-1)*pagesize,currentPage*pagesize)">
                 <el-col :span="6" class="main-item" v-for="(items,index) in list" :key="index">
-                        <div class="pic-item">
-                            <div class="pic" :data-id="items.id" @click="getData(index,$event)">
+                        <div class="pic-item" @click="getData(index,$event)">
+                            <div class="pic" :data-id="items.id">
                                 <span>{{items.id}}</span>
                                 <img :src="items.img">
                             </div>
@@ -131,10 +131,9 @@ export default {
     },
     inject:['reload'],
     created: function () {
-        this.get_all(1);
-
+        this.get_all(1);//执行请求
+        window.scrollTo(0,0);//回到顶部
     },
-
     methods: {
         //查询
         fatherMethod() {

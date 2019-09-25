@@ -9,7 +9,7 @@
         </el-menu>
         <div class="pull-right top-right">
           <div class="search pull-left">
-            <el-input placeholder="请根据编号和命名查询" v-model="search" class="input-with-select">
+            <el-input placeholder="请根据编号和命名查询" v-model="search" class="input-with-select" >
               <el-button slot="append" icon="el-icon-search" @click="btnsearch"></el-button>
             </el-input>
           </div>
