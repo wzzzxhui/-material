@@ -52,6 +52,7 @@ img{vertical-align: top;border:none;}
 .text-right{text-align: right;}
 .clearfix{clear: both;}
 .el-button--success{background-color: #409EFF;border-color: #409EFF;}
+.el-button--success:hover{background-color: #66b1ff;border-color: #66b1ff;}
 body{padding-top: 90px;}
 .inner{width: 1400px;margin: auto;display: inline-block;position: relative;}
 
