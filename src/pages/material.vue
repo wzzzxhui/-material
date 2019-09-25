@@ -58,9 +58,13 @@
 }
 @media screen and (min-width: 1200px) and (max-width: 1399px) {
   .material>>>.main .main-item .pic{height:136px;}
+  .down{ height: 50px;}
+  .down span{line-height: 50px;padding-left: 30px; }
 }
 @media screen and (max-width: 1199px) {
   .material>>>.main .main-item .pic{height:110px;}
+  .down{ height: 40px;}
+  .down span{line-height: 40px;padding-left: 30px; }
 }
 </style>
 <template>
@@ -112,7 +116,8 @@ import navtop from '@/components/navtop' // top nav
 export default {
     data (){
         return{
-            activeName: '0',//导航
+            activeName: typeof(this.$route.params.num)=="undefined"?"0":this.$route.params.num,//导航
+            navtable:'最新',
             currentPage:1, //初始页
             pagesize:12,    //每页的数据
             list:[],
@@ -154,6 +159,8 @@ export default {
 
         //顶部导航
         handleClick(tab, event) {
+            this.navtable = tab.label;
+            console.log( this.navtable)
             this.navid = tab.name;
             this.get_all(this.navid);
         },
@@ -162,7 +169,7 @@ export default {
             //获取点击对象
             let that = this;
             let id = that.list[index].id;
-            that.$router.push({name:"material_details",query:{'ID':id,'activeName':that.activeName}});
+            that.$router.push({name:"material_details",query:{'ID':id,'activeName':that.activeName,'navtable':that.navtable}});
          },
         //每页显示个数选择器的选项设置
         handleSizeChange: function (size) {

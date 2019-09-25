@@ -23,8 +23,11 @@
 .de_item .de_left .grid-content{
     background: white;padding:0 22px 22px;
 }
-.de_item .de_left .grid-content h5{
+.de_item .de_left .el-breadcrumb{
     text-align: left;font-size: 14px;line-height: 24px;padding-top: 10px;
+}
+.details>>>.el-breadcrumb__inner.is-link,.details>>>.el-breadcrumb__inner a{
+    font-weight: normal!important
 }
 .de_item .de_left .grid-content img{
     width: 100%;
@@ -50,7 +53,7 @@
      width: 100%;height: auto;
 }
 .de_item .de_left .pic_d li p{
-    line-height: 40px;font-size: 14px;background: #f8f8f8;display: inline-block; width: 100%;
+    line-height: 20px;font-size: 14px;background: #f8f8f8;display: inline-block; width: 100%;padding: 10px 0;
 }
 .de_right .white_bj{
     background: white;padding: 22px 0;margin-bottom: 25px;
@@ -72,6 +75,9 @@
 }
 .liMenu.active{
     color: #17A1FF;border-color: #17A1FF;
+}
+.de_right .padding_left p {
+    line-height: 26px;
 }
 /* @media screen and (max-width: 1199px) {
   .de_item .de_left .pic_d li{
@@ -98,7 +104,12 @@
             <el-row class="de_item">
                 <el-col :span="16" class="de_left">
                     <div class="grid-content">
-                        <h5>物料/最新/255</h5>
+                        <!-- <h5>物料/最新/255</h5> -->
+                        <el-breadcrumb separator="/">
+                            <el-breadcrumb-item :to="{ path: '/' }">落地页</el-breadcrumb-item>
+                            <el-breadcrumb-item :to="{name:'landing_page',params:{num:this.activeName}}">{{this.$route.query.navtable}}</el-breadcrumb-item>
+                            <el-breadcrumb-item>{{this.$route.query.ID}}</el-breadcrumb-item>
+                        </el-breadcrumb>
                         <ul class="pic_d">
                             <li class="pt" v-for="(items,index) in pic_t" :key="index">
                                 <div>
@@ -142,7 +153,7 @@
                         <div class="white_bj padding_left">
                             <p>选择banner图</p>
                             <div>
-                                <el-button class="liMenu" size="small" :class="chicun_id==chicun.id?'active':'chicun.id'" @click="btn_cc(chicun,idx2)" v-for="(chicun,idx2) in chicuns" :key="chicun.id">{{chicun.wh}}</el-button>
+                                <el-button class="liMenu" size="small" :class="chicun_id==chicun.id?'active':'chicun.id'" @click="btn_cc(chicun,idx2)" v-for="(chicun,idx2) in chicuns" :key="chicun.id">{{idx2+1}}</el-button>
                             </div>
                         </div>
                         <div class="white_bj xiazai">
@@ -169,7 +180,8 @@ export default {
     data (){
         return{
             pid:this.$route.query.ID,
-            activeName: this.$route.query.activeName,//导航
+            activeName: this.$route.query.activeName,//导航数字
+            navtable:this.$route.query.navtable,//导航label
             activeNav: 'landing_page',//导航默认选中
             pic_t:[
 //                {'id':'12','name':'第一页','url':'http://img.zcool.cn/community/01678455dac73e32f875a1323c144f.jpg'},
@@ -221,7 +233,10 @@ export default {
 
          //导航
         handleClick(tab, event) {
-            console.log(tab.label);
+            this.$router.push({
+                name: 'landing_page',
+                params:{num:this.activeName}
+            })
         },
         //尺寸
         btn_cc(obj,idx2){

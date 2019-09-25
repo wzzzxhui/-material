@@ -102,6 +102,7 @@ text-align: left;width: 100%;min-height: 50px;
       };
     },
     props:['psMsg','pid'],//接手psMsg值
+    inject:['reload'],
     methods: {
       //删除物料
       handleRemove(file, fileList) {
@@ -150,7 +151,6 @@ text-align: left;width: 100%;min-height: 50px;
       }, (err) =>{
           this.fileList=[];
         })
-
 
       },
       //上传成功钩子

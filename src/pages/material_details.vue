@@ -23,8 +23,11 @@
 .de_item .de_left .grid-content{
     background: white;padding:0 22px 22px;
 }
-.de_item .de_left .grid-content h5{
-    text-align: left;font-size: 14px;line-height: 24px;padding-top: 10px;
+.de_item .de_left .el-breadcrumb{
+    font-size: 14px;line-height: 24px;padding-top: 10px;
+}
+.details>>>.el-breadcrumb__inner.is-link,.details>>>.el-breadcrumb__inner a{
+    font-weight: normal!important
 }
 .de_item .de_left .grid-content img{
     width: 100%;
@@ -32,22 +35,27 @@
 .de_item .de_left .pic_d{
     display: block;
     margin: 0 -10px;
+    text-align: left;
 }
 .de_item .de_left .pic_d li{
-    width: 33.33%;height: auto;overflow: hidden;float: left;
+    width: 33.33%;
+    /* float: left;display: block */
+    vertical-align: top;
+    display:inline-block;
 }
 .de_item .de_left .pic_d li>div{
     margin: 10px;-webkit-box-shadow: 0px 2px 4px rgba(0,0,0,0.2);
     box-shadow: 0px 2px 4px rgba(0,0,0,0.2);
 }
 .de_item .de_left .pd .pic{
-    width: 100%;max-height: 274px;
+    width: 100%;
+    /* max-height: 274px; */
 }
 .de_item .de_left .pd .pic_d li img{
      width: 100%;max-height: 244px;
 }
 .de_item .de_left .pic_d li p{
-    line-height: 40px;font-size: 14px;background: #f8f8f8;display: inline-block; width: 100%;
+    line-height: 20px;font-size: 14px;background: #f8f8f8;display: inline-block; width: 100%;text-align: center;padding: 10px 0;
 }
 .de_item .de_left .pic_d .pt{
     width: 100%;height: auto;max-height: auto
@@ -102,7 +110,12 @@
             <el-row class="de_item">
                 <el-col :span="16" class="de_left">
                     <div class="grid-content">
-                        <h5>物料/最新/255</h5>
+                        <!-- <h5>物料/最新/255</h5> -->
+                        <el-breadcrumb separator="/">
+                            <el-breadcrumb-item :to="{ path: 'material' }">物料</el-breadcrumb-item>
+                            <el-breadcrumb-item :to="{name:'material',params:{num:this.activeName}}">{{this.$route.query.navtable}}</el-breadcrumb-item>
+                            <el-breadcrumb-item>{{this.$route.query.ID}}</el-breadcrumb-item>
+                        </el-breadcrumb>
                         <ul class="pic_d">
                             <li class="pt" v-for="(items,index) in pic_t" :key="index">
                                 <div>
@@ -132,10 +145,10 @@
                         <div class="white_bj padding_left" v-for="(texts,index) in text" :key="index">
                             <p><span>编号：</span>{{texts.id}}</p>
                             <p><span>大小：</span>{{texts.size}}</p>
-                            <p><span>尺寸：</span>{{texts.wh}}</p>
                             <p><span>上传时间：</span>{{texts.date}}</p>
                             <p><span>展示量：</span>{{texts.views}}</p>
-                            <p><span>点赞：</span>{{texts.likes}}</p>
+                            <p><span>尺寸：</span>{{texts.wh}}</p>
+                            <p><span>点击：</span>{{texts.likes}}</p>
                             <p><span>下载量：</span>{{texts.downs}}</p>
                         </div>
                         <div class="white_bj padding_left">
@@ -173,23 +186,14 @@ export default {
         return{
             pid:this.$route.query.ID,
             activeName: this.$route.query.activeName,//导航
+            navtable:this.$route.query.navtable,//导航,
             pic_t:[],
-            item:[
-//                {'id':'23','name':'百度推广1','url':'/static/img/pic1.89ee279.png'},
-//                {'id':'43','name':'百度推广2','url':'http://hbimg.b0.upaiyun.com/792216e17b522e8e32de07936f9a3062b9ff9d3fc0a6a-CUYyrN_fw658'},
-//                {'id':'65','name':'百度推广3','url':'/static/img/pic1.89ee279.png'},
-//                {'id':'43','name':'百度推广4','url':'http://hbimg.b0.upaiyun.com/792216e17b522e8e32de07936f9a3062b9ff9d3fc0a6a-CUYyrN_fw658'},
-//                {'id':'65','name':'百度推广5','url':'http://hbimg.b0.upaiyun.com/792216e17b522e8e32de07936f9a3062b9ff9d3fc0a6a-CUYyrN_fw658'},
-            ],
+            item:[],
             geshis:[],
             geshi_index:0,
-
             chicun_index:0,
             chicuns:[],
-            text:[
-                {}
-            ],
-            // dialogFormVisible:true
+            text:[],
             chicun_id :0
         }
     },
@@ -242,7 +246,11 @@ export default {
          },
          //导航
         handleClick(tab, event) {
-            console.log(tab.label);
+            console.log(this.activeName)
+            this.$router.push({
+                name: 'material',
+                params:{num:this.activeName}
+            })
         },
         //格式
         btn_gs(geshi,idx){

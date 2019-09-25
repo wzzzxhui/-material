@@ -58,9 +58,13 @@
 }
 @media screen and (min-width: 1200px) and (max-width: 1399px) {
   .main .main-item .pic{height:356px;}
+  .down{ height: 50px;}
+  .down span{line-height: 50px;padding-left: 30px; }
 }
 @media screen and (max-width: 1199px) {
   .main .main-item .pic{height:294px;}
+  .down{ height: 40px;}
+  .down span{line-height: 40px;padding-left: 30px; }
 }
 </style>
 <template>
@@ -115,7 +119,8 @@ import navtop from '@/components/navtop' // top nav
 export default {
     data (){
         return{
-            activeName: '2',//导航
+            activeName: typeof(this.$route.params.num)=="undefined"?"2":this.$route.params.num,//导航
+            navtable:'优选',
             currentPage:1, //初始页
             pagesize:12,    //每页的数据
             list:[],
@@ -126,7 +131,8 @@ export default {
     },
     inject:['reload'],
     created: function () {
-        this.get_all(1)
+        this.get_all(1);
+
     },
 
     methods: {
@@ -150,21 +156,22 @@ export default {
             .catch(function (error) { // 请求失败处理
                 console.log(error);
             });
+
          },
 
         //点击logo返回首页
          //顶部导航
          handleClick(tab, event) {
+             this.navtable = tab.label
              this.navid = tab.name;
              this.get_all(this.navid);
         },
         //点击查看详情
         getData:function (index,event) {
-            
             //获取点击对象
             let that = this
             let id = that.list[index].id;
-            that.$router.push({name:"landing_details",query:{'ID':id,'activeName':that.activeName}});
+            that.$router.push({name:"landing_details",query:{'ID':id,'activeName':that.activeName,'navtable':that.navtable}});
         },
          // 初始页currentPage、初始每页数据数pagesize和数据data
         handleSizeChange: function (size) {
@@ -179,6 +186,7 @@ export default {
     components:{
         navtop
     }
+
 }
 </script>
 
