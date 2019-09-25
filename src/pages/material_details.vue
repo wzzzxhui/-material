@@ -49,22 +49,21 @@
 }
 .de_item .de_left .pd .pic{
     width: 100%;
-    /* max-height: 274px; */
 }
 .de_item .de_left .pd .pic_d li img{
-     width: 100%;max-height: 244px;
+     width: 100%;
 }
 .de_item .de_left .pic_d li p{
     line-height: 20px;font-size: 14px;background: #f8f8f8;display: inline-block; width: 100%;text-align: center;padding: 10px 0;
 }
 .de_item .de_left .pic_d .pt{
-    width: 100%;height: auto;max-height: auto
+    width: 100%;height: auto;
 }
 .de_item .de_left .pt .pic{
-    width: 100%;height: auto;max-height: auto
+    width: 100%;height: auto;
 }
 .de_item .de_left .pt img{
-    width: 100%;height: auto;max-height: auto
+    width: 100%;height: auto;
 }
 .de_right .white_bj{
     background: white;padding: 22px 0;margin-bottom: 25px;

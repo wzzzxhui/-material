@@ -34,13 +34,15 @@
 }
 .de_item .de_left .pic_d{
     display: block;
-   margin: 0 -10px;
+   margin: 0 -10px;text-align: left;
 }
 .de_item .de_left .pic_d .pt .pic{
-    width: 100%;max-height: 625px;overflow: hidden;
+    width: 100%;
 }
 .de_item .de_left .pic_d li{
-    width: 33.333%;height: auto;overflow: hidden;float: left;
+    width: 33.333%;
+    vertical-align: top;
+    display:inline-block;
 }
 .de_item .de_left .pic_d li>div{
     margin: 10px;-webkit-box-shadow: 0px 2px 4px rgba(0,0,0,0.2);
@@ -53,7 +55,7 @@
      width: 100%;height: auto;
 }
 .de_item .de_left .pic_d li p{
-    line-height: 20px;font-size: 14px;background: #f8f8f8;display: inline-block; width: 100%;padding: 10px 0;
+    line-height: 20px;font-size: 14px;background: #f8f8f8;display: inline-block; width: 100%;padding: 10px 0;text-align: center;
 }
 .de_right .white_bj{
     background: white;padding: 22px 0;margin-bottom: 25px;
@@ -118,7 +120,7 @@
                                 </div>
                             </li>
                         </ul>
-                        <div class="clearfix"></div>
+                        <!-- <div class="clearfix"></div> -->
                         <ul class="pic_d">
                             <li v-for="(items,index) in item" :key="index">
                                 <div>
