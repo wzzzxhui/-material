@@ -119,6 +119,7 @@ import navtop from '@/components/navtop' // top nav
 export default {
     data (){
         return{
+           
             activeName: typeof(this.$route.params.num)=="undefined"?"2":this.$route.params.num,//导航
             navtable:'优选',
             currentPage:1, //初始页
@@ -131,15 +132,16 @@ export default {
     },
     inject:['reload'],
     created: function () {
+        this.key = typeof(this.$route.params.key) == "undefined" ?'':this.$route.params.key;    
         this.get_all(1);//执行请求
         window.scrollTo(0,0);//回到顶部
     },
     methods: {
         //查询
-        fatherMethod() {
-           this.key = this.$refs.headerChild.search
-            this.get_all(this.navid);
-        },
+        // fatherMethod() {
+        //     this.key = this.$refs.headerChild.search
+        //     this.get_all(this.navid);//执行请求
+        // },
          //获取列表
          get_all:function(status){
             //发送get请求
@@ -155,7 +157,7 @@ export default {
             .catch(function (error) { // 请求失败处理
                 console.log(error);
             });
-
+            
          },
 
         //点击logo返回首页

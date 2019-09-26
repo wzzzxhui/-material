@@ -145,7 +145,12 @@
       //顶部查询
       btnsearch(){
         //触发父页面事件
-        this.$parent.fatherMethod();
+        // this.$parent.fatherMethod();
+        console.log(this.$parent.htmlname)
+        this.$router.push({
+            name: this.$parent.htmlname,
+            params:{"key":this.search}
+        })
       },
       //落地页弹窗
       btnlanding(){

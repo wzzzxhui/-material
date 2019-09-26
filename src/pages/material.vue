@@ -128,14 +128,15 @@ export default {
     },
     inject:['reload'],
     created: function () {
+        this.key = typeof(this.$route.params.key) == "undefined" ?'':this.$route.params.key;    
         this.get_all(1);//执行请求
         window.scrollTo(0,0);//回到顶部
     },
      methods: {
         //查询
         fatherMethod(tab, event) {
-            this.key = this.$refs.headerChild.search
-            this.get_all(this.navid);
+             this.key = this.$refs.headerChild.search
+            this.get_all(this.navid);//执行请求
         },
          //获取列表
          get_all:function(status){

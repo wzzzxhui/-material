@@ -186,6 +186,7 @@ export default {
             pid:this.$route.query.ID,
             activeName: this.$route.query.activeName,//导航
             navtable:this.$route.query.navtable,//导航,
+            htmlname:'material',
             pic_t:[],
             item:[],
             geshis:[],
@@ -245,12 +246,18 @@ export default {
          },
          //导航
         handleClick(tab, event) {
-            console.log(this.activeName)
             this.$router.push({
                 name: 'material',
                 params:{num:this.activeName}
             })
         },
+        //查询
+        // fatherMethod() {
+        //     this.$router.push({
+        //         name: 'material',
+        //         params:{num:this.activeName}
+        //     })
+        // },
         //格式
         btn_gs(geshi,idx){
             this.geshi_index=idx;
@@ -273,7 +280,6 @@ export default {
         let that = this;
         this.$refs.Nav.navactive2(this.e);
     }
-    
 }
 </script>
 

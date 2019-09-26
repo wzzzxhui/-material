@@ -143,8 +143,8 @@
                             <p><span>文件大小：</span>{{texts.size}}</p>
                             <p><span>上传时间：</span>{{texts.date}}</p>
                             <p><span>预览：</span>00000次</p>
-                            <p><span>点击：</span> 00000次</p>
-                            <p><span>状态：</span> 使用中</p>
+                            <p><span>点击：</span>00000次</p>
+                            <p><span>状态：</span>使用中</p>
                             <p><span>尺寸：</span>{{texts.wh}}</p>
                             <p><span>使用平台数：</span>0000</p>
                             
@@ -185,6 +185,7 @@ export default {
             activeName: this.$route.query.activeName,//导航数字
             navtable:this.$route.query.navtable,//导航label
             activeNav: 'landing_page',//导航默认选中
+            htmlname:'landing_page',
             pic_t:[
 //                {'id':'12','name':'第一页','url':'http://img.zcool.cn/community/01678455dac73e32f875a1323c144f.jpg'},
 //                {'id':'31','name':'第二页','url':'http://img.zcool.cn/community/01678455dac73e32f875a1323c144f.jpg'},
@@ -238,6 +239,13 @@ export default {
             this.$router.push({
                 name: 'landing_page',
                 params:{num:this.activeName}
+            })
+        },
+        //查询
+        fatherMethod() {
+            this.$router.push({
+                name: 'landing_page',
+                params:{"key":this.search}
             })
         },
         //尺寸
