@@ -145,9 +145,9 @@
                             <p><span>编号：</span>{{texts.id}}</p>
                             <p><span>大小：</span>{{texts.size}}</p>
                             <p><span>上传时间：</span>{{texts.date}}</p>
-                            <p><span>展示量：</span>{{texts.views}}</p>
+                            <p><span>展示量：</span>{{texts.show_num}}</p>
                             <p><span>尺寸：</span>{{texts.wh}}</p>
-                            <p><span>点击：</span>{{texts.likes}}</p>
+                            <p><span>点击：</span>{{texts.clicks}}</p>
                             <p><span>下载量：</span>{{texts.downs}}</p>
                         </div>
                         <div class="white_bj padding_left">

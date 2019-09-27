@@ -142,8 +142,8 @@
                             <p><span>作品ID：</span>{{texts.id}}</p>
                             <p><span>文件大小：</span>{{texts.size}}</p>
                             <p><span>上传时间：</span>{{texts.date}}</p>
-                            <p><span>预览：</span>00000次</p>
-                            <p><span>点击：</span>00000次</p>
+                            <p><span>预览：</span>{{texts.show_num}}</p>
+                            <p><span>点击：</span>{{texts.clicks}}</p>
                             <p><span>状态：</span>使用中</p>
                             <p><span>尺寸：</span>{{texts.wh}}</p>
                             <p><span>使用平台数：</span>0000</p>

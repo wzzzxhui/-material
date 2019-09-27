@@ -90,8 +90,8 @@
                                 <img :src="items.img">
                             </div>
                             <div class="down">
-                                <span class="down-item1">{{items.views}}</span>
-                                <span class="down-item2">{{items.likes}}</span>
+                                <span class="down-item1">{{items.show_num}}</span>
+                                <span class="down-item2">{{items.clicks}}</span>
                                 <span class="down-item3">{{items.downs}}</span>
                             </div>
                         </div>
