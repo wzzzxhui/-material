@@ -118,6 +118,7 @@ export default {
         return{
             activeName: typeof(this.$route.params.num)=="undefined"?"0":this.$route.params.num,//导航
             navtable:'最新',
+            htmlname:'self',
             currentPage:1, //初始页
             pagesize:12,    //每页的数据
             list:[],

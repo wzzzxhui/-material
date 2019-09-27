@@ -145,12 +145,18 @@
       //顶部查询
       btnsearch(){
         //触发父页面事件
-        // this.$parent.fatherMethod();
-        console.log(this.$parent.htmlname)
-        this.$router.push({
-            name: this.$parent.htmlname,
-            params:{"key":this.search}
-        })
+        var name = this.$parent.htmlname;
+        var that = this;
+        if(name != 'self'){
+          this.$router.push({
+              name: name,
+              params:{"key":this.search}
+          })
+        }else{
+            that.$parent.key = this.search;
+            console.log(that.$parent)
+            that.$parent.get_all(1)
+        }
       },
       //落地页弹窗
       btnlanding(){

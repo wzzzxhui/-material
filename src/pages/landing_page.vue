@@ -119,9 +119,9 @@ import navtop from '@/components/navtop' // top nav
 export default {
     data (){
         return{
-           
             activeName: typeof(this.$route.params.num)=="undefined"?"2":this.$route.params.num,//导航
             navtable:'优选',
+            htmlname:'self',
             currentPage:1, //初始页
             pagesize:12,    //每页的数据
             list:[],
@@ -137,11 +137,6 @@ export default {
         window.scrollTo(0,0);//回到顶部
     },
     methods: {
-        //查询
-        // fatherMethod() {
-        //     this.key = this.$refs.headerChild.search
-        //     this.get_all(this.navid);//执行请求
-        // },
          //获取列表
          get_all:function(status){
             //发送get请求
