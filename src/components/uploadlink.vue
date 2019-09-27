@@ -4,7 +4,7 @@
         title="上传链接"
         :visible.sync="btnlink"
         width="40%">
-        <p class="istips">可以批量添加，直接复制如下的文本框就可以哦，链接请用英文 “***” 隔开</p>
+        <p class="istips">可以批量添加，直接复制如下的文本框就可以哦，链接请用英文小写 “,” 隔开</p>
         <el-input clear="textarea" type="textarea" v-model="link_text" placeholder="请输入..."></el-input>
         <span slot="footer" class="dialog-footer">
             <el-button @click="btnlinkNo">取 消</el-button>
@@ -26,6 +26,9 @@
     props:['linkMsg','pid'],
     methods: {
         submitUpload(){
+          let strs = this.link_text.split(","); //字符分割
+          console.log(strs);
+          return
             let that = this;
             let _url = "/cms/material/material.php?type=upload_fix_by_link";//上传文件接口地址
             var params = new URLSearchParams();
