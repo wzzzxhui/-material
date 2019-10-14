@@ -146,7 +146,7 @@
                             <p><span>点击：</span>{{texts.clicks}}</p>
                             <p><span>状态：</span>使用中</p>
                             <p><span>尺寸：</span>{{texts.wh}}</p>
-                            <p><span>使用平台数：</span>0000</p>
+                            <p><span>使用平台数：</span>{{texts.platform_num}}</p>
                             
                             <!-- <p>展示量：{{texts.views}}</p>
                             <p>点赞：{{texts.likes}}</p>
@@ -220,7 +220,7 @@ export default {
             let url = "";
             let that = this;
             let id = that.$route.query.ID;
-            this.axios.get('/cms/material/material.php?type=get_one_info&id='+id)
+            this.axios.get('/cms/material/material.php?type=get_one_ldy_info&id='+id)
             .then(function (response) {
                 let data = response.data.data;
                 that.pic_t = data['pic_t'];

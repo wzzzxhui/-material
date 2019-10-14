@@ -212,7 +212,7 @@ export default {
             let url = "";
             let that = this;
             let id = that.$route.query.ID;
-            this.axios.get('/cms/material/material.php?type=get_one_info&id='+id)
+            this.axios.get('/cms/material/material.php?type=get_one_material_info&id='+id)
             .then(function (response) {
                 let data = response.data.data;
                 that.pic_t = data['pic_t'];

@@ -14,6 +14,7 @@ module.exports = {
     proxyTable: {
       '/cms': {  //使用"/cms"来代替"http://f.apiplus.c"
         target: 'http://admin-test.kuaidai5.com', //源地址
+        //target: 'http://sd.admin_sd.com', //源地址
         changeOrigin: true, //改变源
         //pathRewrite: {
         //  '^/cms': 'http://admin-test.kuaidai5.com/' //路径重写

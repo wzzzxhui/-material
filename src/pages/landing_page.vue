@@ -142,7 +142,7 @@ export default {
             //发送get请求
             let url = "";
             let that = this;
-            this.axios.get('/cms/material/material.php?type=get_all&upload_type=1&status='+status+'&page_size='+this.pagesize+'&current_page='+this.currentPage+'&key='+that.key)
+            this.axios.get('/cms/material/material.php?type=get_ldy_all&upload_type=1&status='+status+'&page_size='+this.pagesize+'&current_page='+this.currentPage+'&key='+that.key)
             // +'&key='+this.aaa
             .then(function (response) {
                 let data = response.data.data;
