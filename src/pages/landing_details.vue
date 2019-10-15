@@ -144,7 +144,7 @@
                             <p><span>上传时间：</span>{{texts.date}}</p>
                             <p><span>预览：</span>{{texts.show_num}}</p>
                             <p><span>点击：</span>{{texts.clicks}}</p>
-                            <p><span>状态：</span>使用中</p>
+                            <p><span>状态：</span>{{texts.status}}</p>
                             <p><span>尺寸：</span>{{texts.wh}}</p>
                             <p><span>使用平台数：</span>{{texts.platform_num}}</p>
                             
